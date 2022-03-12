@@ -12,7 +12,8 @@ namespace ProgrammersBlog.Data.Concrete.EntityFramework.Mappings
     public class RoleMap: IEntityTypeConfiguration<Role>
     {
         public void Configure(EntityTypeBuilder<Role> builder)
-        {
+        { 
+            // Fluent API
             builder.HasKey(r => r.Id);
             builder.Property(r => r.Id).ValueGeneratedOnAdd();
             builder.Property(r => r.Name).IsRequired();
@@ -29,6 +30,23 @@ namespace ProgrammersBlog.Data.Concrete.EntityFramework.Mappings
             builder.Property(r => r.IsDeleted).IsRequired();
             builder.Property(r => r.Note).HasMaxLength(500);
             builder.ToTable("Roles");
+            builder.HasData(new Role
+            {
+                Id = 1,
+                Name = "Admin",
+                Description = "Admin Rolü , Tüm Haklara Sahiptir.",
+                IsActive = true,
+                IsDeleted = false,
+                CreatedByName = "InitialCreate" ,
+                CreatedDate = DateTime.Now,
+                ModifiedByName = "InitialCreate",
+                ModifiedDate = DateTime.Now,
+                Note = "Admin Rolüdür."
+                // Fluent API ile ön tanımlı veri.
+                // Veriler null geçirebilir olsa da bütün verileri manuel girmemiz lazm .
+
+
+            });
         }
     }
 }
