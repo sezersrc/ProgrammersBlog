@@ -13,9 +13,11 @@ namespace ProgrammersBlog.Services.Abstract
     {
         // Asenkron yapı olduğu için Task kullanıyoruz .
 
-        Task<IDataResult<Category>> Get(int categoryId);
-        Task<IDataResult<IList<Category>>> GetAll();
-        Task<IDataResult<IList<Category>>> GetAllByNonDeleted();
+        Task<IDataResult<CategoryDto>> Get(int categoryId);
+        
+        Task<IDataResult<CategoryListDto>> GetAll();
+        Task<IDataResult<CategoryListDto>> GetAllByNonDeleted();
+        Task<IDataResult<CategoryListDto>> GetAllByNonDeletedAndActive();
         Task<IResult>
             Add(CategoryAddDto categoryAddDto, string createdByName); // Data Transfer Object . ViewModel . FrontEnt tarafında sadece ihtiyaç duyulacak  alanları barındırır .
 
