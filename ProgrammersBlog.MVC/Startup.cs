@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ProgrammersBlog.MVC.Controllers;
 using ProgrammersBlog.Services.Extensions;
 
 namespace ProgrammersBlog.MVC
@@ -52,20 +53,20 @@ namespace ProgrammersBlog.MVC
             app.UseStaticFiles();  // Statik dosya java , html gibi dosyalarý kullandýrýr.
 
             app.UseRouting();
+            app.UseCors(); // Startup hatasý çözümü.
 
+            app.UseAuthentication(); // Startup hatasý verdi çözümü.
             app.UseAuthorization();
+
 
             app.UseEndpoints(endpoints =>
             {
-
-                endpoints.MapDefaultControllerRoute();  // Varsayýlan olarak Hom Controller'A götürür.
-                // Admin Raouting => Tek Areaiçin 
                 endpoints.MapAreaControllerRoute(
                     name: "Admin",
                     areaName: "Admin",
-                    pattern: "Admin/{controller=home}/{action=Index}/{id?}"
+                    pattern: "Admin/{controller=Home}/{action=Index}/{id?}"
                 );
-                
+                endpoints.MapDefaultControllerRoute();
             });
         }
     }
