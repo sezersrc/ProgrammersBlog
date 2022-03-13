@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ProgrammersBlog.MVC.Controllers;
+using ProgrammersBlog.Services.AutoMapper.Profiles;
 using ProgrammersBlog.Services.Extensions;
 
 namespace ProgrammersBlog.MVC
@@ -26,7 +27,7 @@ namespace ProgrammersBlog.MVC
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews().AddRazorRuntimeCompilation(); // MVC olduðunu belirteci && Razor Runtime Compalition 
-            services.AddAutoMapper(typeof(Startup)); // Derlenme esnasýnda AutoMapper'ý derliyor . Mapping sýnýflarýný çaðýrýyor.
+            services.AddAutoMapper(typeof(CategoryProfile),typeof(ArticleProfile)); // *Profil sýnýfý olmak zorunda Derlenme esnasýnda AutoMapper'ý derliyor . Mapping sýnýflarýný çaðýrýyor.
 
             // Service katmanýndan servis yüklenmek . Data'ya direk ulaþmýyor Service >Data aktarýp oradan çekiyor.
             services.LoadMyServices();
