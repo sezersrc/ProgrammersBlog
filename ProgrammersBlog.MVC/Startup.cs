@@ -57,13 +57,15 @@ namespace ProgrammersBlog.MVC
 
             app.UseEndpoints(endpoints =>
             {
+
+                endpoints.MapDefaultControllerRoute();  // Varsayýlan olarak Hom Controller'A götürür.
                 // Admin Raouting => Tek Areaiçin 
                 endpoints.MapAreaControllerRoute(
                     name: "Admin",
                     areaName: "Admin",
                     pattern: "Admin/{controller=home}/{action=Index}/{id?}"
                 );
-                endpoints.MapDefaultControllerRoute();  // Varsayýlan olarak Hom Controller'A götürür.
+                
             });
         }
     }
