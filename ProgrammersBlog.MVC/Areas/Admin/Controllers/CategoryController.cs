@@ -25,5 +25,12 @@ namespace ProgrammersBlog.MVC.Areas.Admin.Controllers
             return View(result.Data);
 
         }
+
+        public IActionResult Add()
+        {
+            // Partial view döndüğüüz için async'e gerek yok 
+
+            return PartialView("_CategoryAddPartial");
+        }
     }
 }

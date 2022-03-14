@@ -57,6 +57,7 @@ namespace ProgrammersBlog.Services.Concrete
                 {
                     Categories = categories,
                     ResultStatus = ResultStatus.Succes
+                    Message = "Katagori Listesi Başarıyla yüklendi"
                 });
             }
 
@@ -103,12 +104,12 @@ namespace ProgrammersBlog.Services.Concrete
             var category = _mapper.Map<Category>(categoryAddDto);
             category.CreatedByName = createdByName;
             category.ModifiedByName = createdByName;
-            var editCategory = await _unitOfWork.Categories.AddAsync(category);
+            var addCategory = await _unitOfWork.Categories.AddAsync(category);
             await _unitOfWork.SaveAsync();
             return new DataResult<CategoryDto>(ResultStatus.Succes,
                 message: $"{categoryAddDto.Name} adlı kategori başarıyla eklenmiştir",new CategoryDto
                 {
-                    Category = editCategory,
+                    Category = addCategory,
                     ResultStatus = ResultStatus.Succes,
                     Message = $"{categoryAddDto.Name} adlı kategori başarıyla eklenmiştir"
                 });
