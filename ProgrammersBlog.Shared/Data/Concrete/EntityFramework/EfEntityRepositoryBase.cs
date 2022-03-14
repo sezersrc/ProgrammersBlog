@@ -82,11 +82,11 @@ namespace ProgrammersBlog.Shared.Data.Concrete.EntityFramework
 
         public async Task<TEntity> UpdateAsync(TEntity entity)
         {
-            await Task.Run(() =>
-            {
+            await Task.Run(() => {   
                 _context.Set<TEntity>().Update(entity);
-                return entity;
+               
             });
+            return entity;
         }
     }
 }

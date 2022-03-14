@@ -56,7 +56,7 @@ namespace ProgrammersBlog.Services.Concrete
                 return new DataResult<CategoryListDto>(ResultStatus.Succes,new CategoryListDto
                 {
                     Categories = categories,
-                    ResultStatus = ResultStatus.Succes
+                    ResultStatus = ResultStatus.Succes,
                     Message = "Katagori Listesi Başarıyla yüklendi"
                 });
             }

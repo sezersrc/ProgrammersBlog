@@ -70,13 +70,7 @@
     </div>
 }
 
-@if (Model.ResultStatus == ResultStatus.Succes)
-{
-    <div class="alert alert-danger mt-3">
-        @*@Model.Message*@ <br/>
-        Dashboard sayfasına geri dönmek için lütfen <a class="alert-link" asp-area="Admin" asp-controller="Home" asp-action="Index">tıklayınız</a>
-    </div>
-}
+
 
     
     @section Scripts
@@ -92,7 +86,7 @@
                         {
                             text: 'Ekle',
                             attr: {
-                                id: "btnAdd"
+                                id: 'btnAdd',
 
                             },
                             className: 'btn btn-success',
@@ -357,10 +351,10 @@
                 $(function () {
                     const url = '@Url.Action("Add","Category")';
                     const placeHolderDiv = $('#modalPlaceHolder');
-                    $('').click(function() {
+                    $('#btnAdd').click(function() {
                         $.get(url).done(function(data) {
                             placeHolderDiv.html(data);
-                            placeHolderDiv.find('modal').modal('show');
+                            placeHolderDiv.find("modal").modal('show');
                         });
                     });
                 });
