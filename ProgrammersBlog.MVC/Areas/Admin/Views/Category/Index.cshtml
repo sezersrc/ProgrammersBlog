@@ -91,7 +91,7 @@
                             },
                             className: 'btn btn-success',
                             action: function (e, dt, node, config) {
-                                alert('Ekle Butonuna Basıldı');
+                              
                             }
                         },
                         {
@@ -354,7 +354,7 @@
                     $('#btnAdd').click(function() {
                         $.get(url).done(function(data) {
                             placeHolderDiv.html(data);
-                            placeHolderDiv.find("modal").modal('show');
+                            placeHolderDiv.find(".modal").modal('show');
                         });
                     });
                 });

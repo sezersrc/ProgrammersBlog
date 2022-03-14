@@ -7,6 +7,7 @@ using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using ProgrammersBlog.MVC.Controllers;
 using ProgrammersBlog.Services.AutoMapper.Profiles;
@@ -26,7 +27,11 @@ namespace ProgrammersBlog.MVC
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews().AddRazorRuntimeCompilation(); // MVC olduðunu belirteci && Razor Runtime Compalition 
+            services.AddControllersWithViews().AddRazorRuntimeCompilation().AddJsonOptions(opt =>
+            {
+                opt.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()); // Enum deðerleri döndürür (JsonNamingPolicy:CamelCase olursa string girebilirsin)
+                opt.JsonSerializerOptions.ReferenceHandler=ReferenceHandler.Preserve;// iç içe olan (nested ) json'A çevirir.
+            }); // MVC olduðunu belirteci && Razor Runtime Compalition . // optJson'A dönüþtürmek için.
             services.AddAutoMapper(typeof(CategoryProfile),typeof(ArticleProfile)); // *Profil sýnýfý olmak zorunda Derlenme esnasýnda AutoMapper'ý derliyor . Mapping sýnýflarýný çaðýrýyor.
 
             // Service katmanýndan servis yüklenmek . Data'ya direk ulaþmýyor Service >Data aktarýp oradan çekiyor.
