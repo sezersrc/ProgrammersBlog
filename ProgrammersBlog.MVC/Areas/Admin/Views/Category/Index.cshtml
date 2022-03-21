@@ -33,26 +33,28 @@
                         <th>Oluşturan Kullanıcı</th>
                         <th>Son Düzenlenme tarihi</th>
                         <th>Son Düzenleyen Kullanıcı</th>
+                        <th>İşlemler</th>
                     </tr>
                     </thead>
                     <tfoot>
-                    <tr>
-                        <th>ID</th>
-                        <th>Adı</th>
-                        <th>Açıklaması</th>
-                        <th>Aktif mi ?</th>
-                        <th>Silinmiş mi?</th>
-                        <th>Not</th>
-                        <th>Oluşturulma Tarihi</th>
-                        <th>Oluşturan Kullanıcı</th>
-                        <th>Son Düzenlenme tarihi</th>
-                        <th>Son Düzenleyen Kullanıcı</th>
-                    </tr>
+                        <tr>
+                            <th>ID</th>
+                            <th>Adı</th>
+                            <th>Açıklaması</th>
+                            <th>Aktif mi ?</th>
+                            <th>Silinmiş mi?</th>
+                            <th>Not</th>
+                            <th>Oluşturulma Tarihi</th>
+                            <th>Oluşturan Kullanıcı</th>
+                            <th>Son Düzenlenme tarihi</th>
+                            <th>Son Düzenleyen Kullanıcı</th>
+                            <th>İşlemler</th>
+                        </tr>
                     </tfoot>
                     <tbody>
                     @foreach (var category in Model.Categories)
                     {
-                        <tr>
+                        <tr name="@category.Id" >
                             <td>@category.Id</td>
                             <td>@category.Name</td>
                             <td>@category.Description</td>
@@ -63,6 +65,11 @@
                             <td>@category.CreatedByName</td>
                             <td>@category.ModifiedDate.ToShortDateString()</td>
                             <td>@category.ModifiedByName</td>
+                            <td>
+                                <button class="btn btn-primary btn-sm ">  <span class="fas fa-edit"></span> Düzenle</button>
+                                <button  class="btn btn-danger btn-sm btn-delete "  data-id="@category.Id" > <span class="fas fa-minus-circle"></span> Sil</button>
+
+                            </td>
                         </tr>
                     }
 
