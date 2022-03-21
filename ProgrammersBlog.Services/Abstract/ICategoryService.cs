@@ -22,7 +22,7 @@ namespace ProgrammersBlog.Services.Abstract
             Add(CategoryAddDto categoryAddDto, string createdByName); // Data Transfer Object . ViewModel . FrontEnt tarafında sadece ihtiyaç duyulacak  alanları barındırır .
 
         Task<IDataResult<CategoryDto>> Update(CategoryUpdateDto categoryUpdateDto, string modifiedByName);
-        Task<IResult> Delete(int categoryId, string modifiedByName);  // IsDeleted Değerini değiştireceğiz . Geri dönülebilir .
+        Task<IDataResult<CategoryDto>> Delete(int categoryId, string modifiedByName);  // IsDeleted Değerini değiştireceğiz . Geri dönülebilir .
         Task<IResult> HardDelete(int categoryId);// veri tabanından silinecek . 
     }
 }
