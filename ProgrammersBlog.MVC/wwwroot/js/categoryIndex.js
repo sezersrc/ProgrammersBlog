@@ -48,7 +48,7 @@ $(document).ready(function () {
                                     <td>${convertToShortDate(category.ModifiedDate)}</td>
                                     <td>${category.ModifiedByName}</td>
                                     <td>
-                                <button class="btn btn-primary  btn-sm"><span class="fas fa-edit"></span></button>
+                                <button class="btn btn-primary  btn-sm btn-update "  data-id="${category.Id}" ><span class="fas fa-edit"></span></button>
                                 <button class="btn btn-danger btn-sm  btn-delete" data-id="${category.Id}"><span class="fas fa-minus-circle"></span></button>
                                     </td>
                                             </tr>`;
@@ -144,7 +144,7 @@ $(document).ready(function () {
         <td>${convertToShortDate(categoryAddAjaxModel.CategoryDto.Category.ModifiedDate)}</td>
         <td>${categoryAddAjaxModel.CategoryDto.Category.ModifiedByName}</td>
         <td>
-                                <button class="btn btn-primary btn-sm"><span class="fas fa-edit"></span> </button>
+                              <button class="btn btn-primary  btn-sm btn-update "  data-id="${categoryAddAjaxModel.CategoryDto.Category.Id}" ><span class="fas fa-edit"></span></button>
                                 <button class="btn btn-danger btn-sm btn-delete" data-id="${categoryAddAjaxModel.CategoryDto.Category.Id}"><span class="fas fa-minus-circle"></span> </button>
          </td>
     </tr>`;
