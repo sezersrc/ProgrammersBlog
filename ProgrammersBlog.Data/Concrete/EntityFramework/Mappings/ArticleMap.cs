@@ -44,82 +44,82 @@ namespace ProgrammersBlog.Data.Concrete.EntityFramework.Mappings
             // Dışarıdan gelen ID olduğundan ilişki kuruyoruz.
             builder.ToTable("Articles");
 
-            builder.HasData(
+            //builder.HasData(
 
-                new Article
-                {
-                    Id = 1,
-                    CategoryId = 1,
-                    Title = "C# 9.0 ce .Net 5 Yenilikleri",
-                    Content =
-                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed orci mauris, luctus sit amet interdum ac, eleifend commodo tellus. Sed a justo et enim congue aliquet in eu ipsum. Donec efficitur purus ante, tempor ornare quam euismod id. Maecenas a felis sed mauris luctus accumsan. Sed dolor elit, pulvinar id nulla in, elementum mattis odio. Vestibulum lorem est, pharetra nec purus vel, sodales rhoncus odio. Nunc varius eleifend tortor, at consequat lectus placerat vitae. Vivamus quis porttitor felis. Morbi non iaculis massa, eget pharetra dui. Nam faucibus quam at elit vestibulum hendrerit. Aenean elementum augue sed porttitor accumsan.",
-                    Thumbnail = "Default.jpg",
-                    SeoDescription = "C# 9.0 ce .Net 5 Yenilikleri ",
-                    SeoTags =  "C#, C# 9 ,.Net5 , .Net Framework , .Net Core",
-                    SeoAuthor = "Sezer Sürücü",
-                    Date = DateTime.Now,
-                    IsActive = true,
-                    IsDeleted = false,
-                    CreatedByName = "InitialCreate",
-                    CreatedDate = DateTime.Now,
-                    ModifiedByName = "InitialCreate",
-                    ModifiedDate = DateTime.Now,
-                    Note = "C# 9.0 ce .Net 5 Yenilikleri",
-                    UserId = 1,
-                    ViewsCount = 100,
-                    CommentCount = 1
+            //    new Article
+            //    {
+            //        Id = 1,
+            //        CategoryId = 1,
+            //        Title = "C# 9.0 ce .Net 5 Yenilikleri",
+            //        Content =
+            //            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed orci mauris, luctus sit amet interdum ac, eleifend commodo tellus. Sed a justo et enim congue aliquet in eu ipsum. Donec efficitur purus ante, tempor ornare quam euismod id. Maecenas a felis sed mauris luctus accumsan. Sed dolor elit, pulvinar id nulla in, elementum mattis odio. Vestibulum lorem est, pharetra nec purus vel, sodales rhoncus odio. Nunc varius eleifend tortor, at consequat lectus placerat vitae. Vivamus quis porttitor felis. Morbi non iaculis massa, eget pharetra dui. Nam faucibus quam at elit vestibulum hendrerit. Aenean elementum augue sed porttitor accumsan.",
+            //        Thumbnail = "Default.jpg",
+            //        SeoDescription = "C# 9.0 ce .Net 5 Yenilikleri ",
+            //        SeoTags =  "C#, C# 9 ,.Net5 , .Net Framework , .Net Core",
+            //        SeoAuthor = "Sezer Sürücü",
+            //        Date = DateTime.Now,
+            //        IsActive = true,
+            //        IsDeleted = false,
+            //        CreatedByName = "InitialCreate",
+            //        CreatedDate = DateTime.Now,
+            //        ModifiedByName = "InitialCreate",
+            //        ModifiedDate = DateTime.Now,
+            //        Note = "C# 9.0 ce .Net 5 Yenilikleri",
+            //        UserId = 1,
+            //        ViewsCount = 100,
+            //        CommentCount = 1
 
-                },
-                new Article
-                {
-                    Id = 2,
-                    CategoryId = 2,
-                    Title = "C++ 11 ve 19 Yenilikleri",
-                    Content =
-                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed orci mauris, luctus sit amet interdum ac, eleifend commodo tellus. Sed a justo et enim congue aliquet in eu ipsum. Donec efficitur purus ante, tempor ornare quam euismod id. Maecenas a felis sed mauris luctus accumsan. Sed dolor elit, pulvinar id nulla in, elementum mattis odio. Vestibulum lorem est, pharetra nec purus vel, sodales rhoncus odio. Nunc varius eleifend tortor, at consequat lectus placerat vitae. Vivamus quis porttitor felis. Morbi non iaculis massa, eget pharetra dui. Nam faucibus quam at elit vestibulum hendrerit. Aenean elementum augue sed porttitor accumsan.",
-                    Thumbnail = "Default.jpg",
-                    SeoDescription = "C++ 11 ve 19 Yenilikleri ",
-                    SeoTags = "C++ 11 ve 19 Yenilikleri",
-                    SeoAuthor = "Sezer Sürücü",
-                    Date = DateTime.Now,
-                    IsActive = true,
-                    IsDeleted = false,
-                    CreatedByName = "InitialCreate",
-                    CreatedDate = DateTime.Now,
-                    ModifiedByName = "InitialCreate",
-                    ModifiedDate = DateTime.Now,
-                    Note = "C++ 11 ve 19 Yenilikleri",
-                    UserId = 1,
-                    ViewsCount = 255,
-                    CommentCount = 1
+            //    },
+            //    new Article
+            //    {
+            //        Id = 2,
+            //        CategoryId = 2,
+            //        Title = "C++ 11 ve 19 Yenilikleri",
+            //        Content =
+            //            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed orci mauris, luctus sit amet interdum ac, eleifend commodo tellus. Sed a justo et enim congue aliquet in eu ipsum. Donec efficitur purus ante, tempor ornare quam euismod id. Maecenas a felis sed mauris luctus accumsan. Sed dolor elit, pulvinar id nulla in, elementum mattis odio. Vestibulum lorem est, pharetra nec purus vel, sodales rhoncus odio. Nunc varius eleifend tortor, at consequat lectus placerat vitae. Vivamus quis porttitor felis. Morbi non iaculis massa, eget pharetra dui. Nam faucibus quam at elit vestibulum hendrerit. Aenean elementum augue sed porttitor accumsan.",
+            //        Thumbnail = "Default.jpg",
+            //        SeoDescription = "C++ 11 ve 19 Yenilikleri ",
+            //        SeoTags = "C++ 11 ve 19 Yenilikleri",
+            //        SeoAuthor = "Sezer Sürücü",
+            //        Date = DateTime.Now,
+            //        IsActive = true,
+            //        IsDeleted = false,
+            //        CreatedByName = "InitialCreate",
+            //        CreatedDate = DateTime.Now,
+            //        ModifiedByName = "InitialCreate",
+            //        ModifiedDate = DateTime.Now,
+            //        Note = "C++ 11 ve 19 Yenilikleri",
+            //        UserId = 1,
+            //        ViewsCount = 255,
+            //        CommentCount = 1
 
-                },
-                new Article
-                {
-                    Id = 3,
-                    CategoryId = 3,
-                    Title = " Java Script S2019 ve S2020 Yenilikleri",
-                    Content =
-                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed orci mauris, luctus sit amet interdum ac, eleifend commodo tellus. Sed a justo et enim congue aliquet in eu ipsum. Donec efficitur purus ante, tempor ornare quam euismod id. Maecenas a felis sed mauris luctus accumsan. Sed dolor elit, pulvinar id nulla in, elementum mattis odio. Vestibulum lorem est, pharetra nec purus vel, sodales rhoncus odio. Nunc varius eleifend tortor, at consequat lectus placerat vitae. Vivamus quis porttitor felis. Morbi non iaculis massa, eget pharetra dui. Nam faucibus quam at elit vestibulum hendrerit. Aenean elementum augue sed porttitor accumsan. Suspendisse malesuada posuere ligula ac tincidunt.Donec dictum sagittis pulvinar.Donec ornare nec dui eget sagittis.Duis finibus eleifend lacus.Nulla tristique viverra suscipit.Ut lobortis lectus quis quam venenatis,nec sodales nunc laoreet.Maecenas hendrerit laoreet mi at fringilla.Nullam risus nulla,blandit sit amet vehicula vel",
+            //    },
+            //    new Article
+            //    {
+            //        Id = 3,
+            //        CategoryId = 3,
+            //        Title = " Java Script S2019 ve S2020 Yenilikleri",
+            //        Content =
+            //            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed orci mauris, luctus sit amet interdum ac, eleifend commodo tellus. Sed a justo et enim congue aliquet in eu ipsum. Donec efficitur purus ante, tempor ornare quam euismod id. Maecenas a felis sed mauris luctus accumsan. Sed dolor elit, pulvinar id nulla in, elementum mattis odio. Vestibulum lorem est, pharetra nec purus vel, sodales rhoncus odio. Nunc varius eleifend tortor, at consequat lectus placerat vitae. Vivamus quis porttitor felis. Morbi non iaculis massa, eget pharetra dui. Nam faucibus quam at elit vestibulum hendrerit. Aenean elementum augue sed porttitor accumsan. Suspendisse malesuada posuere ligula ac tincidunt.Donec dictum sagittis pulvinar.Donec ornare nec dui eget sagittis.Duis finibus eleifend lacus.Nulla tristique viverra suscipit.Ut lobortis lectus quis quam venenatis,nec sodales nunc laoreet.Maecenas hendrerit laoreet mi at fringilla.Nullam risus nulla,blandit sit amet vehicula vel",
                     
-                    Thumbnail = "Default.jpg",
-                    SeoDescription = "Java Script S2019 ve S2020 Yenilikleri",
-                    SeoTags = "Java Script S2019 ve S2020 Yenilikleri",
-                    SeoAuthor = "Sezer Sürücü",
-                    Date = DateTime.Now,
-                    IsActive = true,
-                    IsDeleted = false,
-                    CreatedByName = "InitialCreate",
-                    CreatedDate = DateTime.Now,
-                    ModifiedByName = "InitialCreate",
-                    ModifiedDate = DateTime.Now,
-                    Note = "C++ 11 ve 19 Yenilikleri",
-                    UserId = 1,
-                    ViewsCount = 10,
-                    CommentCount = 1
-                }
+            //        Thumbnail = "Default.jpg",
+            //        SeoDescription = "Java Script S2019 ve S2020 Yenilikleri",
+            //        SeoTags = "Java Script S2019 ve S2020 Yenilikleri",
+            //        SeoAuthor = "Sezer Sürücü",
+            //        Date = DateTime.Now,
+            //        IsActive = true,
+            //        IsDeleted = false,
+            //        CreatedByName = "InitialCreate",
+            //        CreatedDate = DateTime.Now,
+            //        ModifiedByName = "InitialCreate",
+            //        ModifiedDate = DateTime.Now,
+            //        Note = "C++ 11 ve 19 Yenilikleri",
+            //        UserId = 1,
+            //        ViewsCount = 10,
+            //        CommentCount = 1
+            //    }
                 
-            );
+            //);
         }
     }
 }
