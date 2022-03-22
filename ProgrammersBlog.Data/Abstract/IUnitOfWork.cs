@@ -11,8 +11,7 @@ namespace ProgrammersBlog.Data.Abstract
         IArticleRepository Articles { get; } // unitofwork.Articles diye property'lere erşiebileceğiz. 
         ICategoryRepository Categories { get; }
         ICommentRepository Comments { get; }
-        IRoleRepository Roles { get; }
-        IUserRepository  Users { get; }  // Örnek ; _unitOfWork.Categories.AddAsync();
+      
         Task<int> SaveAsync();
 
         //  _unitOfWork.Categories.AddAsync(category);
