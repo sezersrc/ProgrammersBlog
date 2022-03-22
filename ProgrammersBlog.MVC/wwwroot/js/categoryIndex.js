@@ -232,5 +232,6 @@ $(document).ready(function () {
             });
 
     });
+    /*Update ends*/
 
 });
