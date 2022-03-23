@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using ProgrammersBlog.MVC.AutoMapper.Profiles;
 using ProgrammersBlog.MVC.Controllers;
 using ProgrammersBlog.Services.AutoMapper.Profiles;
 using ProgrammersBlog.Services.Extensions;
@@ -34,7 +35,7 @@ namespace ProgrammersBlog.MVC
                 opt.JsonSerializerOptions.ReferenceHandler=ReferenceHandler.Preserve;// iç içe olan (nested ) json'A çevirir.
             }); // MVC olduðunu belirteci && Razor Runtime Compalition . // optJson'A dönüþtürmek için.
             services.AddSession();
-            services.AddAutoMapper(typeof(CategoryProfile),typeof(ArticleProfile)); // *Profil sýnýfý olmak zorunda Derlenme esnasýnda AutoMapper'ý derliyor . Mapping sýnýflarýný çaðýrýyor.
+            services.AddAutoMapper(typeof(CategoryProfile),typeof(ArticleProfile),typeof(UserProfile)); // *Profil sýnýfý olmak zorunda Derlenme esnasýnda AutoMapper'ý derliyor . Mapping sýnýflarýný çaðýrýyor.
 
             // Service katmanýndan servis yüklenmek . Data'ya direk ulaþmýyor Service >Data aktarýp oradan çekiyor.
             services.LoadMyServices();
