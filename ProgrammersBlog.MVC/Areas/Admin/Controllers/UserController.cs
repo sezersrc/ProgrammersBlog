@@ -46,16 +46,16 @@ namespace ProgrammersBlog.MVC.Areas.Admin.Controllers
             // resmin adını kaydediceğiz .  ~/img/user.Picture gibi 
             string wwwroot = _env.WebRootPath;
             // sezersurucu => sezersurucu.png gibi . kullanıcının gönderdiği dosya adı
-            //string fileName = Path.GetFileNameWithoutExtension(userAddDto.Picture.FileName);
+            //string fileName = Path.GetFileNameWithoutExtension(userAddDto.PictureFile.FileName);
             //.png uzantısını alıyoruz .
-            string fileExtension = Path.GetExtension(userAddDto.Picture.FileName);
+            string fileExtension = Path.GetExtension(userAddDto.PictureFile.FileName);
             DateTime dateTime=DateTime.Now;
             // Örnek ; SezerSurucu_587_5_38_12_3_10_2020.png 
             string fileName = $"{userAddDto.UserName}_{dateTime.FullDateAndTimeStringWithUnderscore()}{fileExtension}";
             var path = Path.Combine($"{wwwroot}/img",fileName);
             await using (var stream = new FileStream(path, FileMode.Create))
             {
-                await userAddDto.Picture.CopyToAsync(stream);
+                await userAddDto.PictureFile.CopyToAsync(stream);
             }
 
             return fileName;
