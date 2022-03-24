@@ -44,7 +44,7 @@ namespace ProgrammersBlog.MVC.Areas.Admin.Controllers
             });
         }
         [HttpGet]
-        public async Task<JsonResult> GelAllUsers()
+        public async Task<JsonResult> GetAllUsers()
         {
             var users = await _userManager.Users.ToListAsync();
             
