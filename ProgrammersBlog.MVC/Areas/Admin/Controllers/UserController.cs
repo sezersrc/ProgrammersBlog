@@ -70,7 +70,7 @@ namespace ProgrammersBlog.MVC.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                userAddDto.Picture = await ImageUpload(userAddDto);
+                userAddDto.Picture = await ImageUpload(userAddDto.UserName, userAddDto.PictureFile);
                 var user  = _mapper.Map<User>(userAddDto);
                 var result = await _userManager.CreateAsync(user, userAddDto.Password); //identityResult dönüyor // password'ü identity hashleyerek db'ye yazıyor.
                 if (result.Succeeded)
@@ -161,7 +161,7 @@ namespace ProgrammersBlog.MVC.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 bool isNewPictureUploaded = false;
-                var oldUser = await _userManager.FindByIdAsync(userUpdateDto.Id.ToString();
+                var oldUser = await _userManager.FindByIdAsync(userUpdateDto.Id.ToString());
                 var oldUserPicture = oldUser.Picture;
                 if (userUpdateDto.PictureFile!=null)
                 {
@@ -231,7 +231,7 @@ namespace ProgrammersBlog.MVC.Areas.Admin.Controllers
             var path = Path.Combine($"{wwwroot}/img",fileName);
             await using (var stream = new FileStream(path, FileMode.Create))
             {
-                await PictureFile.CopyToAsync(stream);
+                await pictureFile.CopyToAsync(stream);
             }
 
             return fileName;

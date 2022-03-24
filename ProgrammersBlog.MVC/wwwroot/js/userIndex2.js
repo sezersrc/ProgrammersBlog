@@ -2,7 +2,7 @@
 
     /* DataTables start here. */
 
-   const dataTable = $('#usersTable').DataTable({
+    const dataTable = $('#usersTable').DataTable({
         dom:
             "<'row'<'col-sm-3'l><'col-sm-6 text-center'B><'col-sm-3'f>>" +
             "<'row'<'col-sm-12'tr>>" +
@@ -33,7 +33,7 @@
                             const userListDto = jQuery.parseJSON(data);
                             dataTable.clear();
                             console.log(userListDto);
-                            if (userListDto.ResultStatus === 0) {                               
+                            if (userListDto.ResultStatus === 0) {
                                 $.each(userListDto.Users.$values,
                                     function (index, user) {
                                         dataTable.row.add([
@@ -128,40 +128,40 @@
                     type: 'POST',
                     data: dataToSend,
                     processData: false,
-                    contentType:false,
-                    success: function(data) {
-                    console.log(data);
-                    const userAddAjaxModel = jQuery.parseJSON(data);
-                    console.log(userAddAjaxModel);
-                    const newFormBody = $('.modal-body', userAddAjaxModel.UserAddPartial);
-                    placeHolderDiv.find('.modal-body').replaceWith(newFormBody);
-                    const isValid = newFormBody.find('[name="IsValid"]').val() === 'True';
-                    if (isValid) {
-                        placeHolderDiv.find('.modal').modal('hide');
-                        dataTable.row.add([
-                            userAddAjaxModel.UserDto.User.Id,
-                            userAddAjaxModel.UserDto.User.UserName,
-                            userAddAjaxModel.UserDto.User.Email,
-                            userAddAjaxModel.UserDto.User.PhoneNumber,
-                            `<img src="/img/${userAddAjaxModel.UserDto.User.Picture}" alt="${userAddAjaxModel.UserDto.User.UserName}" style="max-height: 50px; max-width: 50px;" />`,
-                            `
+                    contentType: false,
+                    success: function (data) {
+                        console.log(data);
+                        const userAddAjaxModel = jQuery.parseJSON(data);
+                        console.log(userAddAjaxModel);
+                        const newFormBody = $('.modal-body', userAddAjaxModel.UserAddPartial);
+                        placeHolderDiv.find('.modal-body').replaceWith(newFormBody);
+                        const isValid = newFormBody.find('[name="IsValid"]').val() === 'True';
+                        if (isValid) {
+                            placeHolderDiv.find('.modal').modal('hide');
+                            dataTable.row.add([
+                                userAddAjaxModel.UserDto.User.Id,
+                                userAddAjaxModel.UserDto.User.UserName,
+                                userAddAjaxModel.UserDto.User.Email,
+                                userAddAjaxModel.UserDto.User.PhoneNumber,
+                                `<img src="/img/${userAddAjaxModel.UserDto.User.Picture}" alt="${userAddAjaxModel.UserDto.User.UserName}" style="max-height: 50px; max-width: 50px;" />`,
+                                `
                                 <button class="btn btn-primary btn-sm btn-update" data-id="${userAddAjaxModel.UserDto.User.Id}"><span class="fas fa - edit"></span></button>
                             < button class= "btn btn-danger btn-sm btn-delete" data - id="${userAddAjaxModel.UserDto.User.Id}"><span class="fas fa-minus-circle"></span></button>
                             `
-                        ]).draw();
-                        toastr.success(`${userAddAjaxModel.UserDto.Message}`, 'Başarılı İşlem!');
-                    } else {
-                        let summaryText = "";
-                        $('#validation-summary > ul > li').each(function() {
-                            let text = $(this).text();
-                            summaryText = `*${text}\n`;
-                        });
-                        toastr.warning(summaryText);
-                    }
+                            ]).draw();
+                            toastr.success(`${userAddAjaxModel.UserDto.Message}`, 'Başarılı İşlem!');
+                        } else {
+                            let summaryText = "";
+                            $('#validation-summary > ul > li').each(function () {
+                                let text = $(this).text();
+                                summaryText = `*${text}\n`;
+                            });
+                            toastr.warning(summaryText);
+                        }
                     },
-                error:function(err) {
-                    console.log(err);
-                }
+                    error: function (err) {
+                        console.log(err);
+                    }
                 });
             });
     });
@@ -221,79 +221,78 @@
             });
         });
 
-/* Ajax GET / Getting the _CategoryUpdatePartial as Modal Form starts from here. */
+    /* Ajax GET / Getting the _CategoryUpdatePartial as Modal Form starts from here. */
 
-    $(function() {
+    $(function () {
         const url = '/Admin/User/Update/';
         const placeHolderDiv = $('#modalPlaceHolder');
         $(document).on('click',
             '.btn-update',
-            function(event) {
+            function (event) {
                 event.preventDefault();
                 const id = $(this).attr('data-id');
-                $.get(url, { userId: id }).done(function(data) {
+                $.get(url, { userId: id }).done(function (data) {
                     placeHolderDiv.html(data);
                     placeHolderDiv.find('.modal').modal('show');
-                }).fail(function() {
+                }).fail(function () {
                     toastr.error("Bir hata oluştu.");
                 });
             });
 
-    /* Ajax POST / Updating a User starts from here */
+        /* Ajax POST / Updating a User starts from here */
 
-    placeHolderDiv.on('click',
-        '#btnUpdate',
-        function(event) {
-            event.preventDefault();
-
-            const form = $('#form-user-update');
-            const actionUrl = form.attr('action');
-            const dataToSend = new FormData(form.get(0));
-            $.ajax({
-                url: actionUrl,
-                type: 'POST',
-                data: dataToSend,
-                processData: false,
-                contentType: false,
-                success: (function (data) {
-                    const userUpdateAjaxModel = jQuery.parseJSON(data);
-                    console.log(userUpdateAjaxModel);
-                    const id = userUpdateAjaxModel.userDto.user.Id;
-                    const tableRow = $(`[name="${id}"]`);
-                    const newFormBody = $('.modal-body', userUpdateAjaxModel.UserUpdatePartial);
-                    placeHolderDiv.find('.modal-body').replaceWith(newFormBody);
-                    const isValid = newFormBody.find('[name="IsValid"]').val() === 'True';
-                    if (isValid) {
-                        placeHolderDiv.find('.modal').modal('hide');
-                        dataTable.row(tableRow).data([
-                            userUpdateAjaxModel.UserDto.User.Id,
-                            userUpdateAjaxModel.UserDto.User.UserName,
-                            userUpdateAjaxModel.UserDto.User.Email,
-                            userUpdateAjaxModel.UserDto.User.PhoneNumber,
-                            `<img src="/img/${userAddAjaxModel.UserDto.User.Picture}" alt="${userUpdateAjaxModel.UserDto.User.UserName}" class="my-image-table" />`,
-                            `
+        placeHolderDiv.on('click',
+            '#btnUpdate',
+            function (event) {
+                event.preventDefault();
+                const form = $('#form-user-update');
+                const actionUrl = form.attr('action');
+                const dataToSend = new FormData(form.get(0));
+                $.ajax({
+                    url: actionUrl,
+                    type: 'POST',
+                    data: dataToSend,
+                    processData: false,
+                    contentType: false,
+                    success: (function (data) {
+                        const userUpdateAjaxModel = jQuery.parseJSON(data);
+                        console.log(userUpdateAjaxModel);
+                        const id = userUpdateAjaxModel.userDto.user.Id;
+                        const tableRow = $(`[name="${id}"]`);
+                        const newFormBody = $('.modal-body', userUpdateAjaxModel.UserUpdatePartial);
+                        placeHolderDiv.find('.modal-body').replaceWith(newFormBody);
+                        const isValid = newFormBody.find('[name="IsValid"]').val() === 'True';
+                        if (isValid) {
+                            placeHolderDiv.find('.modal').modal('hide');
+                            dataTable.row(tableRow).data([
+                                userUpdateAjaxModel.UserDto.User.Id,
+                                userUpdateAjaxModel.UserDto.User.UserName,
+                                userUpdateAjaxModel.UserDto.User.Email,
+                                userUpdateAjaxModel.UserDto.User.PhoneNumber,
+                                `<img src="/img/${userAddAjaxModel.UserDto.User.Picture}" alt="${userUpdateAjaxModel.UserDto.User.UserName}" class="my-image-table" />`,
+                                `
                                 <button class="btn btn-primary btn-sm btn-update" data-id="${userUpdateAjaxModel.UserDto.User.Id}"><span class="fas fa - edit"></span></button>
                             < button class= "btn btn-danger btn-sm btn-delete" data - id="${userUpdateAjaxModel.UserDto.User.Id}"><span class="fas fa-minus-circle"></span></button>
                             `
-                        ]);
-                        tableRow.attr("name", `${id}`);
-                        dataTable.row(tableRow).invalidate();
-                        toastr.success(`${userUpdateAjaxModel.UserDto.Message}`, "Başarılı İşlem!");
-                    } else {
-                        let summaryText = "";
-                        $('#validation-summary > ul > li').each(function () {
-                            let text = $(this).text();
-                            summaryText = `*${text}\n`;
-                        });
-                        toastr.warning(summaryText);
-                    }
-                },
-                    error: function(error) {
-                    console.log(error);
-                    }
+                            ]);
+                            tableRow.attr("name", `${id}`);
+                            dataTable.row(tableRow).invalidate();
+                            toastr.success(`${userUpdateAjaxModel.UserDto.Message}`, "Başarılı İşlem!");
+                        } else {
+                            let summaryText = "";
+                            $('#validation-summary > ul > li').each(function () {
+                                let text = $(this).text();
+                                summaryText = `*${text}\n`;
+                            });
+                            toastr.warning(summaryText);
+                        }
+                    },
+                        error: function(error) {
+                            console.log(error);
+                        }
+                });
             });
-            });
-        });
-
     });
+
+   
 });

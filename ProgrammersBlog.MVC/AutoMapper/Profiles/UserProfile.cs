@@ -14,7 +14,7 @@ namespace ProgrammersBlog.MVC.AutoMapper.Profiles
         {
             CreateMap<UserAddDto, User>();
             CreateMap<User, UserUpdateDto>();  // 1. değer başlangıç değeri . 2. Değer dönüşecek değer.
-            CreateMap<UserUpdateDto, User>()
+            CreateMap<UserUpdateDto, User>();
         }
     }
 }
