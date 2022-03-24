@@ -15,6 +15,7 @@ using ProgrammersBlog.MVC.Areas.Admin.Models;
 using ProgrammersBlog.Shared.Utilities.Extensions;
 using ProgrammersBlog.Shared.Utilities.Results.ComplexTypes;
 using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.Http;
 
 namespace ProgrammersBlog.MVC.Areas.Admin.Controllers
 {  
@@ -35,6 +36,7 @@ namespace ProgrammersBlog.MVC.Areas.Admin.Controllers
         public async  Task<IActionResult>  Index()
         {
             var users = await _userManager.Users.ToListAsync();
+            ImageDelete("test ");
             return View(new UserListDto
             {
                 Users = users,
@@ -144,26 +146,112 @@ namespace ProgrammersBlog.MVC.Areas.Admin.Controllers
                 return Json(deletedUserErrorModel);
             }
         }
+        [HttpGet]
+        public async Task<PartialViewResult> Update(int userId)
+        {    // 2. Yöntem 
+            var user = await _userManager.Users.FirstOrDefaultAsync(u => u.Id == userId);
+            var userUpdateDto = _mapper.Map<UserUpdateDto>(user);
+            return PartialView("_UserUpdatePartial", userUpdateDto);
 
-        public async Task<string> ImageUpload(UserAddDto userAddDto)
+        }
+        [HttpPost]
+
+        public async Task<IActionResult> Update(UserUpdateDto userUpdateDto)
+        {
+            if (ModelState.IsValid)
+            {
+                bool isNewPictureUploaded = false;
+                var oldUser = await _userManager.FindByIdAsync(userUpdateDto.Id.ToString();
+                var oldUserPicture = oldUser.Picture;
+                if (userUpdateDto.PictureFile!=null)
+                {
+                    userUpdateDto.Picture = await ImageUpload(userUpdateDto.UserName, userUpdateDto.PictureFile);
+                    isNewPictureUploaded = true;
+
+                }
+                var updatedUser = _mapper.Map<UserUpdateDto, User>(userUpdateDto, oldUser);
+                var result = await _userManager.UpdateAsync(updatedUser);
+                if (result.Succeeded)
+                {
+                    if (isNewPictureUploaded)
+                    {
+                        ImageDelete(oldUserPicture);
+                    }
+                    var userUpdateViewMoel = JsonSerializer.Serialize(new UserUpdateAjaxViewModel
+                    {
+                        UserDto = new UserDto
+                        {
+                            ResultStatus = ResultStatus.Succes,
+                            Message = $"{updatedUser.UserName} adlı kullanıcı başarıyla güncellenmiştir",
+                            User = updatedUser
+                        },
+                        UserUpdatePartial = await this.RenderViewToStringAsync("_UserUpdatePartial", userUpdateDto)
+                    });
+                    return Json(userUpdateViewMoel);
+                }
+                else
+                {
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError("", error.Description);
+                    }
+                    var userUpdateErrorViewMoel = JsonSerializer.Serialize(new UserUpdateAjaxViewModel
+                    {
+                        UserUpdateDto = userUpdateDto,
+                        UserUpdatePartial = await this.RenderViewToStringAsync("_UserUpdatePartial", userUpdateDto)
+                    }); 
+                    return Json(userUpdateErrorViewMoel);
+                }
+
+            }
+            else
+            {
+                var userUpdateModelStateErrorViewMoel = JsonSerializer.Serialize(new UserUpdateAjaxViewModel
+                {
+                    UserUpdateDto = userUpdateDto,
+                    UserUpdatePartial = await this.RenderViewToStringAsync("_UserUpdatePartial", userUpdateDto)
+                });
+                return Json(userUpdateModelStateErrorViewMoel);
+            }
+
+        }
+
+
+        public async Task<string> ImageUpload(string UserName , IFormFile pictureFile)
         {    
             // resmin adını kaydediceğiz .  ~/img/user.Picture gibi 
             string wwwroot = _env.WebRootPath;
             // sezersurucu => sezersurucu.png gibi . kullanıcının gönderdiği dosya adı
             //string fileName = Path.GetFileNameWithoutExtension(userAddDto.PictureFile.FileName);
             //.png uzantısını alıyoruz .
-            string fileExtension = Path.GetExtension(userAddDto.PictureFile.FileName);
+            string fileExtension = Path.GetExtension(pictureFile.FileName);
             DateTime dateTime=DateTime.Now;
             // Örnek ; SezerSurucu_587_5_38_12_3_10_2020.png 
-            string fileName = $"{userAddDto.UserName}_{dateTime.FullDateAndTimeStringWithUnderscore()}{fileExtension}";
+            string fileName = $"{UserName}_{dateTime.FullDateAndTimeStringWithUnderscore()}{fileExtension}";
             var path = Path.Combine($"{wwwroot}/img",fileName);
             await using (var stream = new FileStream(path, FileMode.Create))
             {
-                await userAddDto.PictureFile.CopyToAsync(stream);
+                await PictureFile.CopyToAsync(stream);
             }
 
             return fileName;
 
+        }
+        public bool ImageDelete(string pictureName)
+        {
+            pictureName = "sezersurucu_76_46_6_14_23_3_2022.png";
+             // güncelleme için eski resmi silecek class 
+            string wwwroot = _env.WebRootPath;
+            var fileToDelete = Path.Combine($"{wwwroot}/img", pictureName);
+            if (System.IO.File.Exists(fileToDelete))
+            {
+                System.IO.File.Delete(fileToDelete);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
      

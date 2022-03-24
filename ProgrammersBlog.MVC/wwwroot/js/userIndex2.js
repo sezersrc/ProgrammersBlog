@@ -231,7 +231,7 @@
             function(event) {
                 event.preventDefault();
                 const id = $(this).attr('data-id');
-                $.get(url, { categoryId: id }).done(function(data) {
+                $.get(url, { userId: id }).done(function(data) {
                     placeHolderDiv.html(data);
                     placeHolderDiv.find('.modal').modal('show');
                 }).fail(function() {
@@ -239,7 +239,7 @@
                 });
             });
 
-    /* Ajax POST / Updating a Category starts from here */
+    /* Ajax POST / Updating a User starts from here */
 
     placeHolderDiv.on('click',
         '#btnUpdate',
