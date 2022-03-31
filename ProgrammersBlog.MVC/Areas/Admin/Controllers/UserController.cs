@@ -25,14 +25,12 @@ namespace ProgrammersBlog.MVC.Areas.Admin.Controllers
     public class UserController : Controller
     {
         private readonly UserManager<User> _userManager;
-        private readonly IWebHostEnvironment _env;
         private readonly IMapper _mapper;
         private readonly SignInManager<User> _signInManager;
 
-        public UserController(UserManager<User> userManager ,IWebHostEnvironment env, IMapper mapper, SignInManager<User> signInManager)
+        public UserController(UserManager<User> userManager , IMapper mapper, SignInManager<User> signInManager)
         {
             _userManager = userManager;
-            _env = env;
             _mapper = mapper;
             _signInManager = signInManager;
         }
@@ -365,6 +363,15 @@ namespace ProgrammersBlog.MVC.Areas.Admin.Controllers
                         TempData.Add("SuccessMessage", $"Şifreniz başarıyla değiştirilmiştir");
                         return View();
                     }
+                    else
+                    {
+                        foreach (var error in result.Errors)
+                        {
+                            ModelState.AddModelError("",error.Description);
+                        }
+
+                        return View(userPasswordChangeDto);
+                    }
                 }
                 else
                 {
@@ -378,29 +385,14 @@ namespace ProgrammersBlog.MVC.Areas.Admin.Controllers
                 return View(userPasswordChangeDto);
             }
 
-            return View();
+
 
         }
 
         [Authorize(Roles = "Admin,Editor")]
         public async Task<string> ImageUpload(string UserName , IFormFile pictureFile)
         {    
-            // resmin adını kaydediceğiz .  ~/img/user.Picture gibi 
-            string wwwroot = _env.WebRootPath;
-            // sezersurucu => sezersurucu.png gibi . kullanıcının gönderdiği dosya adı
-            //string fileName = Path.GetFileNameWithoutExtension(userAddDto.PictureFile.FileName);
-            //.png uzantısını alıyoruz .
-            string fileExtension = Path.GetExtension(pictureFile.FileName);
-            DateTime dateTime=DateTime.Now;
-            // Örnek ; SezerSurucu_587_5_38_12_3_10_2020.png 
-            string fileName = $"{UserName}_{dateTime.FullDateAndTimeStringWithUnderscore()}{fileExtension}";
-            var path = Path.Combine($"{wwwroot}/img",fileName);
-            await using (var stream = new FileStream(path, FileMode.Create))
-            {
-                await pictureFile.CopyToAsync(stream);
-            }
-
-            return fileName;
+            
 
         }
 
