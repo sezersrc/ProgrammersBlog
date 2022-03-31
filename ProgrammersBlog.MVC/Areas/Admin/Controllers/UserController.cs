@@ -17,6 +17,7 @@ using ProgrammersBlog.Shared.Utilities.Results.ComplexTypes;
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using ProgrammersBlog.MVC.Helpers.Abstract;
 
 namespace ProgrammersBlog.MVC.Areas.Admin.Controllers
 {  
@@ -25,14 +26,16 @@ namespace ProgrammersBlog.MVC.Areas.Admin.Controllers
     public class UserController : Controller
     {
         private readonly UserManager<User> _userManager;
-        private readonly IMapper _mapper;
         private readonly SignInManager<User> _signInManager;
+        private readonly IMapper _mapper;
+        private readonly IImageHelper _imageHelper;
 
-        public UserController(UserManager<User> userManager , IMapper mapper, SignInManager<User> signInManager)
+        public UserController(UserManager<User> userManager , IMapper mapper, SignInManager<User> signInManager, IImageHelper imageHelper)
         {
             _userManager = userManager;
             _mapper = mapper;
             _signInManager = signInManager;
+            _imageHelper = imageHelper;
         }
         [Authorize(Roles = "Admin")]
         public async  Task<IActionResult>  Index()
@@ -125,7 +128,11 @@ namespace ProgrammersBlog.MVC.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                userAddDto.Picture = await ImageUpload(userAddDto.UserName, userAddDto.PictureFile);
+                var uploadedImageDataResult = await _imageHelper.UploadUserImage(userAddDto.UserName, userAddDto.PictureFile);
+                userAddDto.Picture = uploadedImageDataResult.ResultStatus == ResultStatus.Succes
+                    ? uploadedImageDataResult.Data.FullName
+                    : "userImages/defaultUser.png";
+
                 var user  = _mapper.Map<User>(userAddDto);
                 var result = await _userManager.CreateAsync(user, userAddDto.Password); //identityResult dönüyor // password'ü identity hashleyerek db'ye yazıyor.
                 if (result.Succeeded)
@@ -230,7 +237,10 @@ namespace ProgrammersBlog.MVC.Areas.Admin.Controllers
                 var oldUserPicture = oldUser.Picture;
                 if (userUpdateDto.PictureFile!=null)
                 {
-                    userUpdateDto.Picture = await ImageUpload(userUpdateDto.UserName, userUpdateDto.PictureFile);
+                    var uploadedImageDataResult = await _imageHelper.UploadUserImage(userUpdateDto.UserName, userUpdateDto.PictureFile);
+                    userUpdateDto.Picture = uploadedImageDataResult.ResultStatus == ResultStatus.Succes
+                        ? uploadedImageDataResult.Data.FullName
+                        : "userImages/defaultUser.png";
                     isNewPictureUploaded = true;
 
                 }
@@ -300,7 +310,10 @@ namespace ProgrammersBlog.MVC.Areas.Admin.Controllers
                 var oldUserPicture = oldUser.Picture;
                 if (userUpdateDto.PictureFile != null)
                 {
-                    userUpdateDto.Picture = await ImageUpload(userUpdateDto.UserName, userUpdateDto.PictureFile);
+                    var uploadedImageDataResult = await _imageHelper.UploadUserImage(userUpdateDto.UserName, userUpdateDto.PictureFile);
+                    userUpdateDto.Picture = uploadedImageDataResult.ResultStatus == ResultStatus.Succes
+                        ? uploadedImageDataResult.Data.FullName
+                        : "userImages/defaultUser.png";
                     if (oldUserPicture!="defaultUser.png")
                     {
                         isNewPictureUploaded = true;
@@ -388,30 +401,27 @@ namespace ProgrammersBlog.MVC.Areas.Admin.Controllers
 
 
         }
-
-        [Authorize(Roles = "Admin,Editor")]
-        public async Task<string> ImageUpload(string UserName , IFormFile pictureFile)
-        {    
-            
-
-        }
+        
+     
 
         [Authorize(Roles = "Admin,Editor")]
         public bool ImageDelete(string pictureName)
         {
-            pictureName = "sezersurucu_76_46_6_14_23_3_2022.png";
-             // güncelleme için eski resmi silecek class 
-            string wwwroot = _env.WebRootPath;
-            var fileToDelete = Path.Combine($"{wwwroot}/img", pictureName);
-            if (System.IO.File.Exists(fileToDelete))
-            {
-                System.IO.File.Delete(fileToDelete);
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            //pictureName = "sezersurucu_76_46_6_14_23_3_2022.png";
+            // // güncelleme için eski resmi silecek class 
+            //string wwwroot = _env.WebRootPath;
+            //var fileToDelete = Path.Combine($"{wwwroot}/img", pictureName);
+            //if (System.IO.File.Exists(fileToDelete))
+            //{
+            //    System.IO.File.Delete(fileToDelete);
+            //    return true;
+            //}
+            //else
+            //{
+            //    return false;
+            //}
+
+            return true;
         }
 
      

@@ -12,6 +12,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using ProgrammersBlog.MVC.AutoMapper.Profiles;
 using ProgrammersBlog.MVC.Controllers;
+using ProgrammersBlog.MVC.Helpers.Abstract;
+using ProgrammersBlog.MVC.Helpers.Concrete;
 using ProgrammersBlog.Services.AutoMapper.Profiles;
 using ProgrammersBlog.Services.Extensions;
 
@@ -39,6 +41,7 @@ namespace ProgrammersBlog.MVC
 
             // Service katmanýndan servis yüklenmek . Data'ya direk ulaþmýyor Service >Data aktarýp oradan çekiyor.
             services.LoadMyServices();
+            services.AddScoped<IImageHelper, ImageHelper>();
             services.ConfigureApplicationCookie(options =>
             {
                 options.LoginPath = new PathString("/Admin/User/Login");
