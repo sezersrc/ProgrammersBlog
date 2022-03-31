@@ -407,19 +407,7 @@ namespace ProgrammersBlog.MVC.Areas.Admin.Controllers
         [Authorize(Roles = "Admin,Editor")]
         public bool ImageDelete(string pictureName)
         {
-            //pictureName = "sezersurucu_76_46_6_14_23_3_2022.png";
-            // // güncelleme için eski resmi silecek class 
-            //string wwwroot = _env.WebRootPath;
-            //var fileToDelete = Path.Combine($"{wwwroot}/img", pictureName);
-            //if (System.IO.File.Exists(fileToDelete))
-            //{
-            //    System.IO.File.Delete(fileToDelete);
-            //    return true;
-            //}
-            //else
-            //{
-            //    return false;
-            //}
+            
 
             return true;
         }
