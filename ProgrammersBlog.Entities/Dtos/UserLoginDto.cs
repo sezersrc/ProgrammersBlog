@@ -23,12 +23,7 @@ namespace ProgrammersBlog.Entities.Dtos
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
-        [DisplayName("Telefon Numarası")]
-        [Required(ErrorMessage = "{0} boş geçilmemelidir !..")]
-        [MaxLength(13, ErrorMessage = "{0} {1} karakterden büyük olmamalıdır. ")]
-        [MinLength(13, ErrorMessage = "{0} {1} karakterden küçük olamaz. ")]
-        [DataType(DataType.PhoneNumber)]
-
+        
         [DisplayName("Beni Hatırla")]
         public bool RememberMe { get; set; }
     }
