@@ -21,7 +21,7 @@ using Microsoft.AspNetCore.Http;
 namespace ProgrammersBlog.MVC.Areas.Admin.Controllers
 {  
      [Area("Admin")]
-    
+     // [Authorize(Roles = "Admin")] Login controller yaptığında eklenecek
     public class UserController : Controller
     {
         private readonly UserManager<User> _userManager;
@@ -36,7 +36,7 @@ namespace ProgrammersBlog.MVC.Areas.Admin.Controllers
             _mapper = mapper;
             _signInManager = signInManager;
         }
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public async  Task<IActionResult>  Index()
         {
             var users = await _userManager.Users.ToListAsync();
@@ -71,7 +71,7 @@ namespace ProgrammersBlog.MVC.Areas.Admin.Controllers
                     }
                     else
                     {
-                        ModelState.AddModelError("","Eposta adresiniz veya şifreniz yalnıştır .");
+                        ModelState.AddModelError("","Eposta adresiniz veya M  şifreniz yalnıştır .");
                         return View("UserLogin");
                     }
                 }
@@ -87,7 +87,7 @@ namespace ProgrammersBlog.MVC.Areas.Admin.Controllers
             }
            
         }
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public async Task<JsonResult> GetAllUsers()
         {
@@ -104,13 +104,13 @@ namespace ProgrammersBlog.MVC.Areas.Admin.Controllers
 
             return Json(userListDto);
         }
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public IActionResult Add()
         {
             return PartialView("_UserAddPartial");
         }
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> Add(UserAddDto userAddDto)
         {
@@ -158,7 +158,7 @@ namespace ProgrammersBlog.MVC.Areas.Admin.Controllers
             return Json(userAddAjaxModelStateErrorModel);
 
         }
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public async Task<JsonResult> Delete (int userId)
         {
             var user = await _userManager.FindByIdAsync(userId.ToString());
@@ -193,7 +193,7 @@ namespace ProgrammersBlog.MVC.Areas.Admin.Controllers
             }
         }
 
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public async Task<PartialViewResult> Update(int userId)
         {    // 2. Yöntem 
@@ -203,7 +203,7 @@ namespace ProgrammersBlog.MVC.Areas.Admin.Controllers
 
         }
 
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         [HttpPost]
 
         public async Task<IActionResult> Update(UserUpdateDto userUpdateDto)
@@ -266,7 +266,7 @@ namespace ProgrammersBlog.MVC.Areas.Admin.Controllers
 
         }
 
-        [Authorize]
+        [Authorize(Roles = "Admin,Editor")]
         public async Task<string> ImageUpload(string UserName , IFormFile pictureFile)
         {    
             // resmin adını kaydediceğiz .  ~/img/user.Picture gibi 
@@ -288,7 +288,7 @@ namespace ProgrammersBlog.MVC.Areas.Admin.Controllers
 
         }
 
-        [Authorize]
+        [Authorize(Roles = "Admin,Editor")]
         public bool ImageDelete(string pictureName)
         {
             pictureName = "sezersurucu_76_46_6_14_23_3_2022.png";
