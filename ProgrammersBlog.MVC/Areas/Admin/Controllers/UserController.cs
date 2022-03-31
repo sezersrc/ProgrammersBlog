@@ -158,6 +158,12 @@ namespace ProgrammersBlog.MVC.Areas.Admin.Controllers
             return Json(userAddAjaxModelStateErrorModel);
 
         }
+        [HttpGet]
+        public ViewResult AccessDenied()
+        {
+            return View();
+        }
+
         [Authorize(Roles = "Admin")]
         public async Task<JsonResult> Delete (int userId)
         {
