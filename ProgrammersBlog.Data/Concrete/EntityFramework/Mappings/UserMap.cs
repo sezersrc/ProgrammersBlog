@@ -63,7 +63,7 @@ namespace ProgrammersBlog.Data.Concrete.EntityFramework.Mappings
                 Picture = "defaultUser.png",
                 EmailConfirmed = true,
                 PhoneNumberConfirmed = true,
-                SecurityStamp = new Guid().ToString()
+                SecurityStamp = Guid.NewGuid().ToString()
 
             };
             adminUser.PasswordHash = CreatepasswordHash(adminUser,"adminuser");
@@ -80,7 +80,7 @@ namespace ProgrammersBlog.Data.Concrete.EntityFramework.Mappings
                 Picture = "defaultUser.png",
                 EmailConfirmed = true,
                 PhoneNumberConfirmed = true,
-                SecurityStamp = new Guid().ToString()
+                SecurityStamp = Guid.NewGuid().ToString()
 
             };
             editorUser.PasswordHash = CreatepasswordHash(editorUser, "editoruser");
