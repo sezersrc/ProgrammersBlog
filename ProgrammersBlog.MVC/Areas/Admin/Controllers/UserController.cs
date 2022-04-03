@@ -41,7 +41,7 @@ namespace ProgrammersBlog.MVC.Areas.Admin.Controllers
         public async  Task<IActionResult>  Index()
         {
             var users = await _userManager.Users.ToListAsync();
-            ImageDelete("test ");
+          
             return View(new UserListDto
             {
                 Users = users,
@@ -241,7 +241,10 @@ namespace ProgrammersBlog.MVC.Areas.Admin.Controllers
                     userUpdateDto.Picture = uploadedImageDataResult.ResultStatus == ResultStatus.Succes
                         ? uploadedImageDataResult.Data.FullName
                         : "userImages/defaultUser.png";
-                    isNewPictureUploaded = true;
+                    if (oldUserPicture != "userImages/defaultUser.png")
+                    {
+                        isNewPictureUploaded = true;
+                    }
 
                 }
                 var updatedUser = _mapper.Map<UserUpdateDto, User>(userUpdateDto, oldUser);
@@ -250,7 +253,7 @@ namespace ProgrammersBlog.MVC.Areas.Admin.Controllers
                 {
                     if (isNewPictureUploaded)
                     {
-                        ImageDelete(oldUserPicture);
+                        _imageHelper.Delete(oldUserPicture);
                     }
                     var userUpdateViewMoel = JsonSerializer.Serialize(new UserUpdateAjaxViewModel
                     {
@@ -314,7 +317,7 @@ namespace ProgrammersBlog.MVC.Areas.Admin.Controllers
                     userUpdateDto.Picture = uploadedImageDataResult.ResultStatus == ResultStatus.Succes
                         ? uploadedImageDataResult.Data.FullName
                         : "userImages/defaultUser.png";
-                    if (oldUserPicture!="defaultUser.png")
+                    if (oldUserPicture!= "userImages/defaultUser.png")
                     {
                         isNewPictureUploaded = true;
                     }
@@ -327,7 +330,7 @@ namespace ProgrammersBlog.MVC.Areas.Admin.Controllers
                 {
                     if (isNewPictureUploaded)
                     {
-                        ImageDelete(oldUserPicture);
+                        _imageHelper.Delete(oldUserPicture);
                     }
                     TempData.Add("SuccessMessage", $"{updatedUser.UserName} adlı kullanıcı başarıyla güncellenmiştir.");
                     return View(userUpdateDto);
@@ -404,13 +407,7 @@ namespace ProgrammersBlog.MVC.Areas.Admin.Controllers
         
      
 
-        [Authorize(Roles = "Admin,Editor")]
-        public bool ImageDelete(string pictureName)
-        {
-            
-
-            return true;
-        }
+       
 
      
     }
