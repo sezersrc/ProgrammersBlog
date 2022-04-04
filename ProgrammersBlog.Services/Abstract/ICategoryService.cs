@@ -25,6 +25,12 @@ namespace ProgrammersBlog.Services.Abstract
         Task<IDataResult<CategoryListDto>> GetAllAsync();
         Task<IDataResult<CategoryListDto>> GetAllByNonDeletedAsync();
         Task<IDataResult<CategoryListDto>> GetAllByNonDeletedAndActiveAsync();
+        /// <summary>
+        /// Verilen CategoryAddDto ve CreatedByName parametrelerine ait bilgiler ile yeni bir Category ekler.
+        /// </summary>
+        /// <param name="categoryAddDto">categodyAddDto tipinde eklenecek kategori bilgileri.</param>
+        /// <param name="createdByName">string tipinde kullanıcı adı .</param>
+        /// <returns>Asenktron bir operasyon ile Task olarak bizlere eklme işleminin sonucunu DateResult tipinde döner.</returns>
         Task<IDataResult<CategoryDto>>
             AddAsync(CategoryAddDto categoryAddDto, string createdByName); // Data Transfer Object . ViewModel . FrontEnt tarafında sadece ihtiyaç duyulacak  alanları barındırır .
 

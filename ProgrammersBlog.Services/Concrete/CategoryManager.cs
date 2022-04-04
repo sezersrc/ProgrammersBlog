@@ -128,6 +128,12 @@ namespace ProgrammersBlog.Services.Concrete
         }
 
 
+        /// <summary>
+        /// Verilen CategoryAddDto ve CreatedByName parametrelerine ait bilgiler ile yeni bir Category ekler.
+        /// </summary>
+        /// <param name="categoryAddDto">categodyAddDto tipinde eklenecek kategori bilgileri.</param>
+        /// <param name="createdByName">string tipinde kullanıcı adı .</param>
+        /// <returns>Asenktron bir operasyon ile Task olarak bizlere eklme işleminin sonucunu DateResult tipinde döner.</returns>
         public async Task<IDataResult<CategoryDto>> AddAsync(CategoryAddDto categoryAddDto, string createdByName)
         {
             var category = _mapper.Map<Category>(categoryAddDto);

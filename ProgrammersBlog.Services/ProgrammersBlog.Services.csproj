@@ -6,6 +6,7 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DocumentationFile>E:\Software Development\blogpro\ProgrammersBlog\ProgrammersBlog.Services\ProgrammersBlog.Services.xml</DocumentationFile>
+    <NoWarn>1701;1702;CS1591</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
