@@ -166,7 +166,7 @@ namespace ProgrammersBlog.Services.Concrete
                 var deletedCategory = await _unitOfWork.Categories.UpdateAsync(category);
                 await _unitOfWork.SaveAsync();
 
-                return new DataResult<CategoryDto>(ResultStatus.Succes, Messages.Category.Delete(deletedCategory.Name) new CategoryDto
+                return new DataResult<CategoryDto>(ResultStatus.Succes, Messages.Category.Delete(deletedCategory.Name) ,new CategoryDto
                 {
                     Category = deletedCategory,
                     ResultStatus = ResultStatus.Succes,

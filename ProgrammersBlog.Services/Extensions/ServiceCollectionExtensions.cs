@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using ProgrammersBlog.Data.Abstract;
 using ProgrammersBlog.Data.Concrete;
@@ -15,10 +16,10 @@ namespace ProgrammersBlog.Services.Extensions
 {
     public  static class ServiceCollectionExtensions
     {
-        public static IServiceCollection LoadMyServices(this IServiceCollection serviceCollection)
+        public static IServiceCollection LoadMyServices(this IServiceCollection serviceCollection, string connectionString)
         {
             // Data KAtmanındaki  yapıları MVC KAtmanına aktarmaya yarayan servis .Startup.CS'den çağırdık.
-            serviceCollection.AddDbContext<ProgrammersBlogContext>();
+            serviceCollection.AddDbContext<ProgrammersBlogContext>(options=>options.UseSqlServer(connectionString));  // appsettings'e taşıdk.
             serviceCollection.AddIdentity<User, Role>(options =>
             {
                 // User Password Options 

@@ -18,12 +18,17 @@ namespace ProgrammersBlog.Data.Concrete.EntityFramework.Contexts
        
 
         //ovverridebuilder 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    optionsBuilder.UseSqlServer(
+        //        @"Server=SOFTEK-CENTER\MODSQL;Database=ProgrammersBlog;Trusted_Connection=True;Connect Timeout=30;MultipleActiveResultSets=True;");
+
+
+        //}
+
+        public ProgrammersBlogContext(DbContextOptions<ProgrammersBlogContext> options):base(options)
         {
-            optionsBuilder.UseSqlServer(
-                @"Server=SOFTEK-CENTER\MODSQL;Database=ProgrammersBlog;Trusted_Connection=True;Connect Timeout=30;MultipleActiveResultSets=True;");
-
-
+            // AppsettingsJson
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -156,12 +156,12 @@ namespace ProgrammersBlog.Data.Migrations
                         {
                             Id = 1,
                             CreatedByName = "InitialCreate",
-                            CreatedDate = new DateTime(2022, 3, 31, 17, 20, 54, 231, DateTimeKind.Local).AddTicks(2236),
+                            CreatedDate = new DateTime(2022, 4, 4, 6, 58, 35, 546, DateTimeKind.Local).AddTicks(114),
                             Description = "C# Programlama dili ile ilgili en güncel bilgiler ",
                             IsActive = true,
                             IsDeleted = false,
                             ModifiedByName = "InitialCreate",
-                            ModifiedDate = new DateTime(2022, 3, 31, 17, 20, 54, 231, DateTimeKind.Local).AddTicks(3071),
+                            ModifiedDate = new DateTime(2022, 4, 4, 6, 58, 35, 546, DateTimeKind.Local).AddTicks(694),
                             Name = "C#",
                             Note = "C# Blog Kategorisi"
                         },
@@ -169,12 +169,12 @@ namespace ProgrammersBlog.Data.Migrations
                         {
                             Id = 2,
                             CreatedByName = "InitialCreate",
-                            CreatedDate = new DateTime(2022, 3, 31, 17, 20, 54, 231, DateTimeKind.Local).AddTicks(3869),
+                            CreatedDate = new DateTime(2022, 4, 4, 6, 58, 35, 546, DateTimeKind.Local).AddTicks(1281),
                             Description = "C++ Programlama dili ile ilgili en güncel bilgiler ",
                             IsActive = true,
                             IsDeleted = false,
                             ModifiedByName = "InitialCreate",
-                            ModifiedDate = new DateTime(2022, 3, 31, 17, 20, 54, 231, DateTimeKind.Local).AddTicks(3872),
+                            ModifiedDate = new DateTime(2022, 4, 4, 6, 58, 35, 546, DateTimeKind.Local).AddTicks(1282),
                             Name = "C++",
                             Note = "C++ Blog Kategorisi"
                         },
@@ -182,12 +182,12 @@ namespace ProgrammersBlog.Data.Migrations
                         {
                             Id = 3,
                             CreatedByName = "InitialCreate",
-                            CreatedDate = new DateTime(2022, 3, 31, 17, 20, 54, 231, DateTimeKind.Local).AddTicks(3878),
+                            CreatedDate = new DateTime(2022, 4, 4, 6, 58, 35, 546, DateTimeKind.Local).AddTicks(1287),
                             Description = "Java Script Programlama dili ile ilgili en güncel bilgiler ",
                             IsActive = true,
                             IsDeleted = false,
                             ModifiedByName = "InitialCreate",
-                            ModifiedDate = new DateTime(2022, 3, 31, 17, 20, 54, 231, DateTimeKind.Local).AddTicks(3879),
+                            ModifiedDate = new DateTime(2022, 4, 4, 6, 58, 35, 546, DateTimeKind.Local).AddTicks(1288),
                             Name = "Java Script",
                             Note = "Java Script Blog Kategorisi"
                         });
@@ -273,14 +273,14 @@ namespace ProgrammersBlog.Data.Migrations
                         new
                         {
                             Id = 1,
-                            ConcurrencyStamp = "51d54918-dad5-43dd-b54f-eb9f3be17e4f",
+                            ConcurrencyStamp = "3454be5c-a24e-4712-ad2f-46f4dc5fd942",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = 2,
-                            ConcurrencyStamp = "8e8035f9-dc43-42cc-adee-ca28283e3727",
+                            ConcurrencyStamp = "c4712010-ea4b-4a48-947d-cfab4d65814e",
                             Name = "Editor",
                             NormalizedName = "EDITOR"
                         });
@@ -385,17 +385,17 @@ namespace ProgrammersBlog.Data.Migrations
                         {
                             Id = 1,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "fda0a241-975c-453f-89dc-0d5bc9ffc8a7",
+                            ConcurrencyStamp = "485e7e29-882e-4449-aea8-31298057cd48",
                             Email = "adminuser@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMINUSER@GMAIL.COM",
                             NormalizedUserName = "ADMINUSER",
-                            PasswordHash = "AQAAAAEAACcQAAAAEAnt25ajJda9oGNRCxeUGb1BWXMfZ0CXv1vz6CuJj3a5SmR+rmTt2HLmw5QyV5DGmg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAELYq9iIzxkj7sdBIePwOPoKmhR8UZYpqqJ/5b+y1Kqzx+Ci8Bjvn3Mgw8S9zsmPpNA==",
                             PhoneNumber = "+905555555555",
                             PhoneNumberConfirmed = true,
                             Picture = "defaultUser.png",
-                            SecurityStamp = "b8e813a0-ed80-43d7-96cd-ef22cfeec5b1",
+                            SecurityStamp = "6da88598-aabf-4605-8030-29ecb7c23d3f",
                             TwoFactorEnabled = false,
                             UserName = "adminuser"
                         },
@@ -403,17 +403,17 @@ namespace ProgrammersBlog.Data.Migrations
                         {
                             Id = 2,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "ecacdf8a-8e05-4b05-b569-65031024486e",
+                            ConcurrencyStamp = "95a3ff86-015c-4a8c-bbbf-3dc255c32bb6",
                             Email = "editoruser@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "EDITORUSER@GMAIL.COM",
                             NormalizedUserName = "EDITORUSER",
-                            PasswordHash = "AQAAAAEAACcQAAAAEJucdf1WkjP8qQtmP78H51TTaT4QnlLm/CmSIemQFXReQcYQuon0UtJ0lP3rr26iFQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEKmS23zys6KlfeYw4iTBL1rrKP+eWIOMRpjLM7jDfWqExgg453R2MQ69CXgqnTv15w==",
                             PhoneNumber = "+905555555555",
                             PhoneNumberConfirmed = true,
                             Picture = "defaultUser.png",
-                            SecurityStamp = "42a7f9df-4469-410a-ba25-724927ede1b1",
+                            SecurityStamp = "7c70debf-c557-4af9-9cbc-c768ae01fea4",
                             TwoFactorEnabled = false,
                             UserName = "editoruser"
                         });
