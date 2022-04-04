@@ -7,7 +7,9 @@
     <meta name="description" content="" />
     <meta name="author" content="" />
     <title>@ViewBag.Title -   Admin Panel | Programmers Blog | .Net Core MVC  Kurumsal Mimari</title>
-   @await Html.PartialAsync("_LayoutCssPartial")
+    @await Html.PartialAsync("_LayoutCssPartial")
+    @await RenderSectionAsync("Styles", false);
+    <link href="~/Admin/css/site.css" rel="stylesheet" />
 </head>
 <body class="sb-nav-fixed">
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
