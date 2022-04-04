@@ -44,7 +44,7 @@ namespace ProgrammersBlog.MVC.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = await _categoryService.Add(categoryAddDto,"Sezer Sürücü");
+                var result = await _categoryService.AddAsync(categoryAddDto,"Sezer Sürücü");
                 if (result.ResultStatus==ResultStatus.Succes)
                 {
                     var categoryAddAjaxModel = JsonSerializer.Serialize(new CategoryAddAjaxViewModel

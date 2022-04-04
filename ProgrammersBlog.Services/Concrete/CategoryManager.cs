@@ -49,6 +49,11 @@ namespace ProgrammersBlog.Services.Concrete
           });
         }
 
+        /// <summary>
+        /// Verilen ID parametresine ait kategorinin CategoryUpdateDto temsilini geriye döner.
+        /// </summary>
+        /// <param name="categoryId">0'dan büyük integer bir ID değeri</param>
+        /// <returns>Asenktron bir operasyon ile Task olarak işlem sonucunu DataResult tipinde geriye döner.</returns>
         public async  Task<IDataResult<CategoryUpdateDto>> GetCategoryUpdateDtoAsync(int categoryId)
         {
             var result = await _unitOfWork.Categories.AnyAsync(c => c.Id == categoryId);
@@ -123,7 +128,7 @@ namespace ProgrammersBlog.Services.Concrete
         }
 
 
-        public async Task<IDataResult<CategoryDto>> Add(CategoryAddDto categoryAddDto, string createdByName)
+        public async Task<IDataResult<CategoryDto>> AddAsync(CategoryAddDto categoryAddDto, string createdByName)
         {
             var category = _mapper.Map<Category>(categoryAddDto);
             category.CreatedByName = createdByName;
