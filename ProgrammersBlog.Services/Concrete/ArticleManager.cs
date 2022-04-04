@@ -9,6 +9,7 @@ using ProgrammersBlog.Entities.Concrete;
 using ProgrammersBlog.Entities.Dtos;
 using ProgrammersBlog.Services.Abstract;
 using ProgrammersBlog.Services.AutoMapper.Profiles;
+using ProgrammersBlog.Services.Utilities;
 using ProgrammersBlog.Shared.Utilities.Results.Abstract;
 using ProgrammersBlog.Shared.Utilities.Results.ComplexTypes;
 using ProgrammersBlog.Shared.Utilities.Results.Concrete;
@@ -40,7 +41,7 @@ namespace ProgrammersBlog.Services.Concrete
                 
             }
 
-            return new DataResult<ArticleDto>(ResultStatus.Error, "Böyle bir makale bulunamadı ", null);
+            return new DataResult<ArticleDto>(ResultStatus.Error,Messages.Article.NotFound(isPlural:false) , null);
         }
 
         public async Task<IDataResult<ArticleListDto>> GetAll()
@@ -54,7 +55,7 @@ namespace ProgrammersBlog.Services.Concrete
                     ResultStatus = ResultStatus.Succes
                 });
             }
-            return new DataResult<ArticleListDto>(ResultStatus.Error, "Böyle bir makale bulunamadı ", null);
+            return new DataResult<ArticleListDto>(ResultStatus.Error, Messages.Article.NotFound(isPlural: true), null);
         }
 
         public async Task<IDataResult<ArticleListDto>> GetAllByNonDeleted()
@@ -68,7 +69,7 @@ namespace ProgrammersBlog.Services.Concrete
                     ResultStatus = ResultStatus.Succes
                 });
             }
-            return new DataResult<ArticleListDto>(ResultStatus.Error, "Böyle bir makale bulunamadı ", null);
+            return new DataResult<ArticleListDto>(ResultStatus.Error, Messages.Article.NotFound(isPlural: false), null);
         }
 
         public async Task<IDataResult<ArticleListDto>> GetAllByNonDeletedAndActive()
@@ -82,7 +83,7 @@ namespace ProgrammersBlog.Services.Concrete
                     ResultStatus = ResultStatus.Succes
                 });
             }
-            return new DataResult<ArticleListDto>(ResultStatus.Error, "Böyle bir makale bulunamadı ", null);
+            return new DataResult<ArticleListDto>(ResultStatus.Error, Messages.Article.NotFound(isPlural: false), null);
         }
 
         public async Task<IDataResult<ArticleListDto>> GetByCategory(int categoryId)
@@ -100,9 +101,9 @@ namespace ProgrammersBlog.Services.Concrete
                         ResultStatus = ResultStatus.Succes
                     });
                 }
-                return new DataResult<ArticleListDto>(ResultStatus.Error, "Makaleler bulunamadı ", null);
+                return new DataResult<ArticleListDto>(ResultStatus.Error, Messages.Article.NotFound(isPlural: true), null);
             }
-            return new DataResult<ArticleListDto>(ResultStatus.Error, "Böyle bir kategori bulunamadı ", null);
+            return new DataResult<ArticleListDto>(ResultStatus.Error, Messages.Article.NotFound(isPlural: false), null);
 
         }
 
@@ -142,7 +143,7 @@ namespace ProgrammersBlog.Services.Concrete
 
                 return new Result(ResultStatus.Succes, $"{article.Title} başlıklı makale başarıyla silinmiştir");
             }
-            return new Result(ResultStatus.Error, "Böyle bir makale bulunamadı.");
+            return new Result(ResultStatus.Error, Messages.Article.NotFound(isPlural: false));
 
         }
 
@@ -158,7 +159,7 @@ namespace ProgrammersBlog.Services.Concrete
                 return new Result(ResultStatus.Succes, $"{article.Title} başlıklı makale başarıyla  veri tabanından silinmiştir");
             }
 
-            return new Result(ResultStatus.Error, "Böyle bir makale bulunamadı.");
+            return new Result(ResultStatus.Error, Messages.Article.NotFound(isPlural: false));
         }
     }
 }
