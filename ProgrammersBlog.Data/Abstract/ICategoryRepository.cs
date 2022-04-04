@@ -10,5 +10,7 @@ namespace ProgrammersBlog.Data.Abstract
 {
     public interface ICategoryRepository : IEntityRepository<Category>
     {
+        // Örnek ; 
+        Task<Category> GetById(int categoryId);
     }
 }
