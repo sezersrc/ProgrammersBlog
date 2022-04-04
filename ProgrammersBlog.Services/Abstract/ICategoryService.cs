@@ -13,19 +13,19 @@ namespace ProgrammersBlog.Services.Abstract
     {
         // Asenkron yapı olduğu için Task kullanıyoruz .
 
-        Task<IDataResult<CategoryDto>> Get(int categoryId);
-        Task<IDataResult<CategoryUpdateDto>> GetCategoryUpdateDto(int categoryId);
+        Task<IDataResult<CategoryDto>> GetAsync(int categoryId);
+        Task<IDataResult<CategoryUpdateDto>> GetCategoryUpdateDtoAsync(int categoryId);
         
-        Task<IDataResult<CategoryListDto>> GetAll();
-        Task<IDataResult<CategoryListDto>> GetAllByNonDeleted();
-        Task<IDataResult<CategoryListDto>> GetAllByNonDeletedAndActive();
+        Task<IDataResult<CategoryListDto>> GetAllAsync();
+        Task<IDataResult<CategoryListDto>> GetAllByNonDeletedAsync();
+        Task<IDataResult<CategoryListDto>> GetAllByNonDeletedAndActiveAsync();
         Task<IDataResult<CategoryDto>>
             Add(CategoryAddDto categoryAddDto, string createdByName); // Data Transfer Object . ViewModel . FrontEnt tarafında sadece ihtiyaç duyulacak  alanları barındırır .
 
-        Task<IDataResult<CategoryDto>> Update(CategoryUpdateDto categoryUpdateDto, string modifiedByName);
-        Task<IDataResult<CategoryDto>> Delete(int categoryId, string modifiedByName);  // IsDeleted Değerini değiştireceğiz . Geri dönülebilir .
-        Task<IResult> HardDelete(int categoryId);// veri tabanından silinecek . 
-        Task<IDataResult<int>> Count();
-        Task<IDataResult<int>> CountByIsDeleted();
+        Task<IDataResult<CategoryDto>> UpdateAsync(CategoryUpdateDto categoryUpdateDto, string modifiedByName);
+        Task<IDataResult<CategoryDto>> DeleteAsync(int categoryId, string modifiedByName);  // IsDeleted Değerini değiştireceğiz . Geri dönülebilir .
+        Task<IResult> HardDeleteAsync(int categoryId);// veri tabanından silinecek . 
+        Task<IDataResult<int>> CountAsync();
+        Task<IDataResult<int>> CountByNonDeletedAsync();
     }
 }
