@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ProgrammersBlog.MVC.Areas.Admin.Models;
 using ProgrammersBlog.Services.Abstract;
 using ProgrammersBlog.Shared.Utilities.Results.ComplexTypes;
 
@@ -13,10 +14,12 @@ namespace ProgrammersBlog.MVC.Areas.Admin.Controllers
     public class ArticleController : Controller
     {
         private readonly IArticleService _articleService;
+        private readonly ICategoryService _categoryService;
 
-        public ArticleController(IArticleService articleService)
+        public ArticleController(IArticleService articleService, ICategoryService categoryService)
         {
             _articleService = articleService;
+            _categoryService = categoryService;
         }
 
 
@@ -30,9 +33,20 @@ namespace ProgrammersBlog.MVC.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public  IActionResult Add()
+        public async Task<IActionResult>  Add()
+
         {
-            return View();
+            var result = await _categoryService.GetAllByNonDeletedAsync();
+            if (result.ResultStatus==ResultStatus.Succes)
+            {
+                return View(new ArticleAddViewModel
+                {
+                    Categories = result.Data.Categories
+                });
+            }
+
+            return NotFound();
+
         }
     }
 }

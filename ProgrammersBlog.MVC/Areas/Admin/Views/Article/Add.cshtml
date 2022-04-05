@@ -1,4 +1,4 @@
-﻿
+﻿@model ProgrammersBlog.MVC.Areas.Admin.Models.ArticleAddViewModel
 @{
     Layout = "_Layout";
     ViewBag.Title = "Makale Ekle";
@@ -17,11 +17,13 @@
             <div class="card">
                 <div class="card-body">
                     <div class="form-group">
-                        <input class="form-control" type="text" id="articleTitle" placeholder="Makale Başlığı..." />
+                        <input class="form-control" type="text" id="articleTitle"  asp-for="Title" placeholder="Makale Başlığı..." />
+                        <span asp-validation-for="Title" class="text-danger" ></span>
                     </div>
 
                     <div class="form-group">
-                        <textarea id="text-editor"></textarea>
+                        <textarea id="text-editor" asp-for="Content"></textarea>
+                        <span asp-validation-for="Content" class="text-danger"></span>
                     </div>
                 </div>
             </div>
@@ -31,28 +33,29 @@
                 <div class="card-header"> Temel Konfigürasyonlar</div>
                 <div class="card-body">
                     <div class="form-group">
-                        <label for="categoryList">Kategori</label>
-                        <select id="categoryList" class="form-control">
+                        <label for="categoryList" asp-for="CategoryId" >Kategori</label>
+                        <select id="categoryList" class="form-control" asp-for="CategoryId" asp-items="@(new SelectList(Model.Categories,"Id","Name"))">
                             <option></option>
-                            <option>C++</option>
-                            <option>Javascript</option>
-                            <option>Python</option>
-                            <option>Java</option>
+                            <span asp-validation-for="CategoryId" class="text-danger"></span>
+
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="datepicker">Tarih</label>
-                        <input type="text" id="datepicker" class="form-control" value="@DateTime.Now.ToShortDateString()" />
+                        <label for="datepicker" asp-for="Date">Tarih</label>
+                        <input type="text" id="datepicker" asp-for="Date" class="form-control" value="@DateTime.Now.ToShortDateString()" />
+                        <span asp-validation-for="Date" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label for="datepicker">Küçük Resim</label>
-                        <input type="file" id="thumbnailUpload" accept="image/*" class="form-control-file" />
+                        <input type="file" id="thumbnailUpload" accept="image/*"  asp-for="ThumbnailFile" class="form-control-file" />
+                        <span asp-validation-for="ThumbnailFile" class="text-danger"></span>
                     </div>
 
                     <div class="form-check">
 
-                        <input type="checkbox" id="isActive" class="form-check-input" />
-                        <label for="isActive"> Aktif mi ?</label>
+                        <input type="checkbox" id="isActive"  asp-for="IsActive" class="form-check-input" />
+                        <label for="isActive" asp-for="IsActive" > Aktif mi ?</label>
+                        <span asp-validation-for="IsActive" class="text-danger"></span>
 
                     </div>
 
@@ -69,17 +72,20 @@
                 <div class="card-body">
                     <div class="form-row">
                         <div class="form-group col-md-6">
-                            <label for="seoWriter">Yazar Adı</label>
-                            <input type="text" id="seoWriter" class="form-control" />
+                            <label for="seoWriter" asp-for="SeoAuthor" >Yazar Adı</label>
+                            <input type="text" id="seoWriter" asp-for="SeoAuthor" class="form-control" />
+                            <span asp-validation-for="SeoAuthor" class="text-danger"></span>
                         </div>
                         <div class="form-group col-md-6">
-                            <label for="seoTags">Etiketler</label>
-                            <input type="text" id="seoTags" class="form-control" />
+                            <label for="seoTags" asp-for="SeoTags">Etiketler</label>
+                            <input type="text" id="seoTags"  asp-for="SeoTags" class="form-control" />
+                            <span asp-validation-for="SeoTags" class="text-danger"></span>
                         </div>
 
                         <div class="form-group col-md-12">
-                            <label for="seoDescription">Makale Açıklaması</label>
-                            <textarea id="seoDescription" class="form-control"></textarea>
+                            <label for="seoDescription" asp-for="SeoDescription">Makale Açıklaması</label>
+                            <textarea id="seoDescription"  asp-for="SeoDescription" class="form-control"></textarea>
+                            <span asp-validation-for="SeoDescription" class="text-danger"></span>
                         </div>
                     </div>
                 </div>
