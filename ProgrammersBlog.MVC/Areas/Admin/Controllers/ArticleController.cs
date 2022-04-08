@@ -7,24 +7,24 @@ using ProgrammersBlog.MVC.Helpers.Abstract;
 using ProgrammersBlog.Services.Abstract;
 using ProgrammersBlog.Shared.Utilities.Results.ComplexTypes;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
+using ProgrammersBlog.Entities.Concrete;
 
 namespace ProgrammersBlog.MVC.Areas.Admin.Controllers
 {
     [Area("Admin")]
 
-    public class ArticleController : Controller
+    public class ArticleController : BaseController
     {
         private readonly IArticleService _articleService;
         private readonly ICategoryService _categoryService;
-        private readonly IMapper _mapper;
-        private readonly IImageHelper _imageHelper;
+        
 
-        public ArticleController(IArticleService articleService, ICategoryService categoryService, IMapper mapper, IImageHelper imageHelper)
+        public ArticleController(IArticleService articleService, ICategoryService categoryService,UserManager<User> userManager  ,IMapper mapper, IImageHelper imageHelper):base(userManager,mapper,imageHelper)
         {
             _articleService = articleService;
             _categoryService = categoryService;
-            _mapper = mapper;
-            _imageHelper = imageHelper;
+            
         }
 
 
@@ -41,12 +41,14 @@ namespace ProgrammersBlog.MVC.Areas.Admin.Controllers
         public async Task<IActionResult> Add()
 
         {
-            var result = await _categoryService.GetAllByNonDeletedAsync();
+            var result = await _categoryService.GetAllByNonDeletedAndActiveAsync();
+            
             if (result.ResultStatus == ResultStatus.Succes)
             {
                 return View(new ArticleAddViewModel
                 {
                     Categories = result.Data.Categories
+                    
                 });
             }
 
@@ -57,13 +59,15 @@ namespace ProgrammersBlog.MVC.Areas.Admin.Controllers
         public async Task<IActionResult> Add(ArticleAddViewModel articleAddViewModel)
 
         {
+            
             if (ModelState.IsValid)
             {
-                var articleAddDto = _mapper.Map<ArticleAddDto>(articleAddViewModel);
-                var imageResult = await _imageHelper.Upload(articleAddViewModel.Title,
+                var articleAddDto = Mapper.Map<ArticleAddDto>(articleAddViewModel); // Base'den gelen Mapper
+                var imageResult = await ImageHelper.Upload(articleAddViewModel.Title,
                     articleAddViewModel.ThumbnailFile, PictureType.Post);
                 articleAddDto.Thumbnail = imageResult.Data.FullName;
-                var result = await _articleService.AddAsync(articleAddDto, "Sezer Sürücü");
+                
+                var result = await _articleService.AddAsync(articleAddDto, LoggedInUser.UserName,LoggedInUser.Id);
                 if (result.ResultStatus == ResultStatus.Succes)
                 {
                     TempData.Add("SuccessMassage", result.Message);
@@ -73,13 +77,32 @@ namespace ProgrammersBlog.MVC.Areas.Admin.Controllers
                 else
                 {
                     ModelState.AddModelError("", result.Message);
-                    return View(articleAddViewModel);
+                    
                 }
 
 
             }
 
+            var categories = await _categoryService.GetAllByNonDeletedAndActiveAsync();
+            articleAddViewModel.Categories = categories.Data.Categories;
             return View(articleAddViewModel);
+
+        }
+        [HttpGet]
+        public async Task<IActionResult> Update(int articleId)
+        {
+            var articleResult = await _articleService.GetArticleUpdateDtoAsync(articleId);
+            var categoriesResult = await _categoryService.GetAllByNonDeletedAndActiveAsync();
+            if (articleResult.ResultStatus==ResultStatus.Succes&&categoriesResult.ResultStatus==ResultStatus.Succes)
+            {
+                var articleUpdateViewModel = Mapper.Map<ArticleUpdateViewModel>(articleResult.Data);
+                articleUpdateViewModel.Categories = categoriesResult.Data.Categories;
+                return View(articleUpdateViewModel);
+            }
+            else
+            {
+                return NotFound();
+            }
 
         }
     }

@@ -29,7 +29,7 @@
     /*Select2 starts  */
 
     $('#categoryList').select2({
-        theme: 'bootstrap4',
+        theme: "bootstrap-5",
         placeholder: "Lütfen bir kategori seçiniz",
         allowClear : true
     });

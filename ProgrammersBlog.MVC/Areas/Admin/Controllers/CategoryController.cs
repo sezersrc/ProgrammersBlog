@@ -8,17 +8,21 @@ using ProgrammersBlog.Shared.Utilities.Results.ComplexTypes;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using AutoMapper;
+using Microsoft.AspNetCore.Identity;
+using ProgrammersBlog.Entities.Concrete;
+using ProgrammersBlog.MVC.Helpers.Abstract;
 
 namespace ProgrammersBlog.MVC.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Authorize(Roles = "Admin,Editor")]
-    public class CategoryController : Controller
+    public class CategoryController : BaseController
     {
 
         private readonly ICategoryService _categoryService;
 
-        public CategoryController(ICategoryService categoryService)
+        public CategoryController(ICategoryService categoryService,UserManager<User> userManager, IMapper mapper, IImageHelper imageHelper):base(userManager,mapper,imageHelper)
         {
             _categoryService = categoryService;
         }
@@ -41,7 +45,7 @@ namespace ProgrammersBlog.MVC.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = await _categoryService.AddAsync(categoryAddDto, "Sezer Sürücü");
+                var result = await _categoryService.AddAsync(categoryAddDto, LoggedInUser.UserName);
                 if (result.ResultStatus == ResultStatus.Succes)
                 {
                     var categoryAddAjaxModel = JsonSerializer.Serialize(new CategoryAddAjaxViewModel
@@ -81,7 +85,7 @@ namespace ProgrammersBlog.MVC.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = await _categoryService.UpdateAsync(categoryUpdateDto, "Sezer Sürücü");
+                var result = await _categoryService.UpdateAsync(categoryUpdateDto, LoggedInUser.UserName);
                 if (result.ResultStatus == ResultStatus.Succes)
                 {
                     var categoryUpdateAjaxModel = JsonSerializer.Serialize(new CategoryUpdateAjaxViewModel
@@ -115,7 +119,7 @@ namespace ProgrammersBlog.MVC.Areas.Admin.Controllers
 
         public async Task<JsonResult> Delete(int categoryId)
         {
-            var result = await _categoryService.DeleteAsync(categoryId, "Sezer Sürücü");
+            var result = await _categoryService.DeleteAsync(categoryId, LoggedInUser.UserName);
             var deletedCatregory = JsonSerializer.Serialize(result.Data);
             return Json(deletedCatregory);
         }
