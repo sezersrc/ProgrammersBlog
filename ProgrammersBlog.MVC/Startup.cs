@@ -37,7 +37,7 @@ namespace ProgrammersBlog.MVC
                 opt.JsonSerializerOptions.ReferenceHandler=ReferenceHandler.Preserve;// iç içe olan (nested ) json'A çevirir.
             }); // MVC olduðunu belirteci && Razor Runtime Compalition . // optJson'A dönüþtürmek için.
             services.AddSession();
-            services.AddAutoMapper(typeof(CategoryProfile),typeof(ArticleProfile),typeof(UserProfile)); // *Profil sýnýfý olmak zorunda Derlenme esnasýnda AutoMapper'ý derliyor . Mapping sýnýflarýný çaðýrýyor.
+            services.AddAutoMapper(typeof(CategoryProfile),typeof(ArticleProfile),typeof(UserProfile),typeof(ViewModelsProfile)); // *Profil sýnýfý olmak zorunda Derlenme esnasýnda AutoMapper'ý derliyor . Mapping sýnýflarýný çaðýrýyor.
 
             // Service katmanýndan servis yüklenmek . Data'ya direk ulaþmýyor Service >Data aktarýp oradan çekiyor.
             services.LoadMyServices(connectionString:Configuration.GetConnectionString("LocalDB")); // Local DB'de

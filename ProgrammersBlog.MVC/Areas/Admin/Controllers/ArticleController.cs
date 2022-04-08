@@ -3,7 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
+using ProgrammersBlog.Entities.ComplexTypes;
+using ProgrammersBlog.Entities.Dtos;
 using ProgrammersBlog.MVC.Areas.Admin.Models;
+using ProgrammersBlog.MVC.Helpers.Abstract;
 using ProgrammersBlog.Services.Abstract;
 using ProgrammersBlog.Shared.Utilities.Results.ComplexTypes;
 
@@ -15,11 +19,15 @@ namespace ProgrammersBlog.MVC.Areas.Admin.Controllers
     {
         private readonly IArticleService _articleService;
         private readonly ICategoryService _categoryService;
+        private readonly IMapper _mapper;
+        private readonly IImageHelper _imageHelper;
 
-        public ArticleController(IArticleService articleService, ICategoryService categoryService)
+        public ArticleController(IArticleService articleService, ICategoryService categoryService, IMapper mapper, IImageHelper imageHelper)
         {
             _articleService = articleService;
             _categoryService = categoryService;
+            _mapper = mapper;
+            _imageHelper = imageHelper;
         }
 
 
@@ -46,6 +54,35 @@ namespace ProgrammersBlog.MVC.Areas.Admin.Controllers
             }
 
             return NotFound();
+
+        }
+        [HttpPost]
+        public async Task<IActionResult> Add(ArticleAddViewModel articleAddViewModel)
+
+        {
+            if (ModelState.IsValid)
+            {
+                var articleAddDto = _mapper.Map<ArticleAddDto>(articleAddViewModel);
+                var imageResult = await _imageHelper.Upload(articleAddViewModel.Title,
+                    articleAddViewModel.ThumbnailFile, PictureType.Post);
+                articleAddDto.Thumbnail = imageResult.Data.FullName;
+                var result = await _articleService.AddAsync(articleAddDto, "Sezer Sürücü");
+                if (result.ResultStatus==ResultStatus.Succes)
+                {
+                    TempData.Add("SuccessMassage",result.Message);
+
+                    return RedirectToAction("Index", "Article");
+                }
+                else
+                {
+                    ModelState.AddModelError("",result.Message);
+                    return View(articleAddViewModel);
+                }
+
+
+            }
+
+            return View(articleAddViewModel);
 
         }
     }

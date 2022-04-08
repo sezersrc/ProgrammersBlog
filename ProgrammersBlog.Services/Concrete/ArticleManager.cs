@@ -107,7 +107,7 @@ namespace ProgrammersBlog.Services.Concrete
 
         }
 
-        public async Task<IResult> Add(ArticleAddDto articleAddDto, string createdByName)
+        public async Task<IResult> AddAsync(ArticleAddDto articleAddDto, string createdByName)
         { //  AutoMapper
             var article = _mapper.Map<Article>(articleAddDto);
             article.CreatedByName = createdByName;

@@ -20,7 +20,7 @@ namespace ProgrammersBlog.Services.Abstract
         Task<IDataResult<ArticleListDto>> GetByCategoryAsync(int categoryId);
 
         Task<IResult>
-            Add(ArticleAddDto articleAddDto, string createdByName); 
+            AddAsync(ArticleAddDto articleAddDto, string createdByName); 
 
         Task<IResult> UpdateAsync(ArticleUpdateDto articleUpdateDto, string modifiedByName);
         Task<IResult> DeleteAsync(int articleId, string modifiedByName);  
