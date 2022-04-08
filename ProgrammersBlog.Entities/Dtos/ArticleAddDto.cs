@@ -1,20 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using ProgrammersBlog.Entities.Concrete;
+using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ProgrammersBlog.Entities.Concrete;
 
 namespace ProgrammersBlog.Entities.Dtos
 {
-     public class ArticleAddDto
+    public class ArticleAddDto
     {
         [DisplayName("Başlık")]
         [Required(ErrorMessage = "{0} alanı boş geçilmemelidir !.. ")]
-        [MaxLength(100,ErrorMessage = "{0} alanı  {1} karakterden büyük olmamalıdır")]
-        [MinLength(5,ErrorMessage = "{0} alanı  {1} karakterden küçük olmamalıdır")]
+        [MaxLength(100, ErrorMessage = "{0} alanı  {1} karakterden büyük olmamalıdır")]
+        [MinLength(5, ErrorMessage = "{0} alanı  {1} karakterden küçük olmamalıdır")]
         public string Title { get; set; }
 
         [DisplayName("İçerik")]
@@ -30,14 +26,14 @@ namespace ProgrammersBlog.Entities.Dtos
 
         [DisplayName("Tarih")]
         [Required(ErrorMessage = "{0} alanı boş geçilmemelidir !.. ")]
-        [DisplayFormat(ApplyFormatInEditMode = true,DataFormatString = "{0:dd/MM/yyyy}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime Date { get; set; }
         [DisplayName("Seo Yazar bilgisi")]
         [Required(ErrorMessage = "{0} alanı boş geçilmemelidir !.. ")]
         [MaxLength(50, ErrorMessage = "{0} alanı  {1} karakterden büyük olmamalıdır")]
         [MinLength(0, ErrorMessage = "{0} alanı  {1} karakterden küçük olmamalıdır")]
         public string SeoAuther { get; set; }
-        
+
         [DisplayName("Seo Açıklama")]
         [Required(ErrorMessage = "{0} alanı boş geçilmemelidir !.. ")]
         [MaxLength(150, ErrorMessage = "{0} alanı  {1} karakterden büyük olmamalıdır")]
@@ -48,12 +44,12 @@ namespace ProgrammersBlog.Entities.Dtos
         [MaxLength(70, ErrorMessage = "{0} alanı  {1} karakterden büyük olmamalıdır")]
         [MinLength(0, ErrorMessage = "{0} alanı  {1} karakterden küçük olmamalıdır")]
 
-        public string  SeoTags { get; set; }
+        public string SeoTags { get; set; }
 
         [DisplayName("Kategori")]
         [Required(ErrorMessage = "{0} alanı boş geçilmemelidir !.. ")]
-        
-        public int CategoryId  { get; set; }
+
+        public int CategoryId { get; set; }
 
         public Category Category { get; set; }
 

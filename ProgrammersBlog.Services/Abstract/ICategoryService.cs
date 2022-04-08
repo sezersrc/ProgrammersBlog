@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ProgrammersBlog.Entities.Concrete;
-using ProgrammersBlog.Entities.Dtos;
+﻿using ProgrammersBlog.Entities.Dtos;
 using ProgrammersBlog.Shared.Utilities.Results.Abstract;
+using System.Threading.Tasks;
 
 namespace ProgrammersBlog.Services.Abstract
 {
@@ -21,7 +16,7 @@ namespace ProgrammersBlog.Services.Abstract
         /// <param name="categoryId">0'dan büyük integer bir ID değeri</param>
         /// <returns>Asenktron bir operasyon ile Task olarak işlem sonucunu DataResult tipinde geriye döner.</returns>
         Task<IDataResult<CategoryUpdateDto>> GetCategoryUpdateDtoAsync(int categoryId);
-        
+
         Task<IDataResult<CategoryListDto>> GetAllAsync();
         Task<IDataResult<CategoryListDto>> GetAllByNonDeletedAsync();
         Task<IDataResult<CategoryListDto>> GetAllByNonDeletedAndActiveAsync();

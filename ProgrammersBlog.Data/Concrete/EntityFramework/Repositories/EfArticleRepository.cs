@@ -5,7 +5,7 @@ using ProgrammersBlog.Shared.Data.Concrete.EntityFramework;
 
 namespace ProgrammersBlog.Data.Concrete.EntityFramework.Repositories
 {
-    public  class EfArticleRepository:EfEntityRepositoryBase<Article>,IArticleRepository
+    public class EfArticleRepository : EfEntityRepositoryBase<Article>, IArticleRepository
     {
         public EfArticleRepository(DbContext context) : base(context)
         {

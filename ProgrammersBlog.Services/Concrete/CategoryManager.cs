@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using ProgrammersBlog.Data.Abstract;
 using ProgrammersBlog.Entities.Concrete;
 using ProgrammersBlog.Entities.Dtos;
@@ -12,10 +7,12 @@ using ProgrammersBlog.Services.Utilities;
 using ProgrammersBlog.Shared.Utilities.Results.Abstract;
 using ProgrammersBlog.Shared.Utilities.Results.ComplexTypes;
 using ProgrammersBlog.Shared.Utilities.Results.Concrete;
+using System;
+using System.Threading.Tasks;
 
 namespace ProgrammersBlog.Services.Concrete
 {
-     public  class CategoryManager:ICategoryService
+    public class CategoryManager : ICategoryService
     {
         // UnitOfWork Kullanımı .
 
@@ -31,22 +28,22 @@ namespace ProgrammersBlog.Services.Concrete
 
         public async Task<IDataResult<CategoryDto>> GetAsync(int categoryId)
         {
-          var category =  await _unitOfWork.Categories.GetAsync(c => c.Id == categoryId);
-          if (category!=null)
-          {
-              return new DataResult<CategoryDto>(ResultStatus.Succes, new CategoryDto
-              {
-                  Category = category,
-                  ResultStatus = ResultStatus.Succes
-              });
-          }
+            var category = await _unitOfWork.Categories.GetAsync(c => c.Id == categoryId);
+            if (category != null)
+            {
+                return new DataResult<CategoryDto>(ResultStatus.Succes, new CategoryDto
+                {
+                    Category = category,
+                    ResultStatus = ResultStatus.Succes
+                });
+            }
 
-          return new DataResult<CategoryDto>(ResultStatus.Error, Messages.Category.NotFound(isPlural:false) , new CategoryDto
-          {
-              Category = null,
-              ResultStatus = ResultStatus.Error,
-              Message = Messages.Category.NotFound(isPlural: false) // Merkezi 
-          });
+            return new DataResult<CategoryDto>(ResultStatus.Error, Messages.Category.NotFound(isPlural: false), new CategoryDto
+            {
+                Category = null,
+                ResultStatus = ResultStatus.Error,
+                Message = Messages.Category.NotFound(isPlural: false) // Merkezi 
+            });
         }
 
         /// <summary>
@@ -54,7 +51,7 @@ namespace ProgrammersBlog.Services.Concrete
         /// </summary>
         /// <param name="categoryId">0'dan büyük integer bir ID değeri</param>
         /// <returns>Asenktron bir operasyon ile Task olarak işlem sonucunu DataResult tipinde geriye döner.</returns>
-        public async  Task<IDataResult<CategoryUpdateDto>> GetCategoryUpdateDtoAsync(int categoryId)
+        public async Task<IDataResult<CategoryUpdateDto>> GetCategoryUpdateDtoAsync(int categoryId)
         {
             var result = await _unitOfWork.Categories.AnyAsync(c => c.Id == categoryId);
             if (result)
@@ -72,9 +69,9 @@ namespace ProgrammersBlog.Services.Concrete
         public async Task<IDataResult<CategoryListDto>> GetAllAsync()
         {
             var categories = await _unitOfWork.Categories.GetAllAsync(null);
-            if (categories.Count>-1)
+            if (categories.Count > -1)
             {
-                return new DataResult<CategoryListDto>(ResultStatus.Succes,new CategoryListDto
+                return new DataResult<CategoryListDto>(ResultStatus.Succes, new CategoryListDto
                 {
                     Categories = categories,
                     ResultStatus = ResultStatus.Succes,
@@ -115,7 +112,7 @@ namespace ProgrammersBlog.Services.Concrete
 
         public async Task<IDataResult<CategoryListDto>> GetAllByNonDeletedAndActiveAsync()
         {
-            var categories = await _unitOfWork.Categories.GetAllAsync(c => !c.IsDeleted&&c.IsActive); // isDeleted==falce ile aynı.
+            var categories = await _unitOfWork.Categories.GetAllAsync(c => !c.IsDeleted && c.IsActive); // isDeleted==falce ile aynı.
             if (categories.Count > -1)
             {
                 return new DataResult<CategoryListDto>(ResultStatus.Succes, new CategoryListDto
@@ -142,7 +139,7 @@ namespace ProgrammersBlog.Services.Concrete
             var addCategory = await _unitOfWork.Categories.AddAsync(category);
             await _unitOfWork.SaveAsync();
             return new DataResult<CategoryDto>(ResultStatus.Succes,
-                message: Messages.Category.Add(addCategory.Name),new CategoryDto
+                message: Messages.Category.Add(addCategory.Name), new CategoryDto
                 {
                     Category = addCategory,
                     ResultStatus = ResultStatus.Succes,
@@ -153,7 +150,7 @@ namespace ProgrammersBlog.Services.Concrete
         public async Task<IDataResult<CategoryDto>> UpdateAsync(CategoryUpdateDto categoryUpdateDto, string modifiedByName)
         {
             var oldCategory = await _unitOfWork.Categories.GetAsync(c => c.Id == categoryUpdateDto.Id);
-            var category = _mapper.Map<CategoryUpdateDto,Category>(categoryUpdateDto , oldCategory);
+            var category = _mapper.Map<CategoryUpdateDto, Category>(categoryUpdateDto, oldCategory);
             category.ModifiedByName = modifiedByName;
             var updatedCategory = await _unitOfWork.Categories.UpdateAsync(category);
             await _unitOfWork.SaveAsync();
@@ -169,15 +166,15 @@ namespace ProgrammersBlog.Services.Concrete
         public async Task<IDataResult<CategoryDto>> DeleteAsync(int categoryId, string modifiedByName)
         {
             var category = await _unitOfWork.Categories.GetAsync(c => c.Id == categoryId);
-            if (category!=null)
+            if (category != null)
             {
                 category.IsDeleted = true;
                 category.ModifiedByName = modifiedByName;
-                category.ModifiedDate=DateTime.Now;
+                category.ModifiedDate = DateTime.Now;
                 var deletedCategory = await _unitOfWork.Categories.UpdateAsync(category);
                 await _unitOfWork.SaveAsync();
 
-                return new DataResult<CategoryDto>(ResultStatus.Succes, Messages.Category.Delete(deletedCategory.Name) ,new CategoryDto
+                return new DataResult<CategoryDto>(ResultStatus.Succes, Messages.Category.Delete(deletedCategory.Name), new CategoryDto
                 {
                     Category = deletedCategory,
                     ResultStatus = ResultStatus.Succes,
@@ -206,13 +203,13 @@ namespace ProgrammersBlog.Services.Concrete
             }
 
 
-            return new Result(ResultStatus.Error, Messages.Category.NotFound(isPlural:false), null);
+            return new Result(ResultStatus.Error, Messages.Category.NotFound(isPlural: false), null);
         }
 
         public async Task<IDataResult<int>> CountAsync()
         {
             var categoriesCount = await _unitOfWork.Categories.CountAsync();
-            if (categoriesCount>-1)
+            if (categoriesCount > -1)
             {
                 return new DataResult<int>(ResultStatus.Succes, categoriesCount);
             }
@@ -224,7 +221,7 @@ namespace ProgrammersBlog.Services.Concrete
 
         public async Task<IDataResult<int>> CountByNonDeletedAsync()
         {
-            var categoriesCount = await _unitOfWork.Categories.CountAsync(c=>!c.IsDeleted);
+            var categoriesCount = await _unitOfWork.Categories.CountAsync(c => !c.IsDeleted);
             if (categoriesCount > -1)
             {
                 return new DataResult<int>(ResultStatus.Succes, categoriesCount);

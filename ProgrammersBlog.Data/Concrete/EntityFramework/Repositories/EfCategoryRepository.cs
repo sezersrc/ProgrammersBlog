@@ -1,13 +1,13 @@
-﻿using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using ProgrammersBlog.Data.Abstract;
 using ProgrammersBlog.Data.Concrete.EntityFramework.Contexts;
 using ProgrammersBlog.Entities.Concrete;
 using ProgrammersBlog.Shared.Data.Concrete.EntityFramework;
+using System.Threading.Tasks;
 
 namespace ProgrammersBlog.Data.Concrete.EntityFramework.Repositories
 {
-    public class EfCategoryRepository :EfEntityRepositoryBase<Category>,ICategoryRepository
+    public class EfCategoryRepository : EfEntityRepositoryBase<Category>, ICategoryRepository
     {
         public EfCategoryRepository(DbContext context) : base(context)
         {
@@ -17,7 +17,7 @@ namespace ProgrammersBlog.Data.Concrete.EntityFramework.Repositories
         {
             //Örnek Method 
 
-           return await  ProgrammersBlogContext.Categories.SingleOrDefaultAsync(c => c.Id == categoryId);
+            return await ProgrammersBlogContext.Categories.SingleOrDefaultAsync(c => c.Id == categoryId);
 
         }
 
@@ -27,7 +27,7 @@ namespace ProgrammersBlog.Data.Concrete.EntityFramework.Repositories
             {
                 return _context as ProgrammersBlogContext;
             }
-       
+
         }
 
     }

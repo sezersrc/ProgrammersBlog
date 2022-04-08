@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using ProgrammersBlog.Entities.Dtos;
 using ProgrammersBlog.MVC.Areas.Admin.Models;
 
 namespace ProgrammersBlog.MVC.AutoMapper.Profiles
 {
-    public class ViewModelsProfile:Profile
+    public class ViewModelsProfile : Profile
     {
         public ViewModelsProfile()
         {

@@ -1,15 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using ProgrammersBlog.Entities.ComplexTypes;
 using ProgrammersBlog.Entities.Dtos;
 using ProgrammersBlog.MVC.Areas.Admin.Models;
 using ProgrammersBlog.MVC.Helpers.Abstract;
 using ProgrammersBlog.Services.Abstract;
 using ProgrammersBlog.Shared.Utilities.Results.ComplexTypes;
+using System.Threading.Tasks;
 
 namespace ProgrammersBlog.MVC.Areas.Admin.Controllers
 {
@@ -32,20 +29,20 @@ namespace ProgrammersBlog.MVC.Areas.Admin.Controllers
 
 
         [HttpGet]
-        public  async  Task<IActionResult>  Index()
+        public async Task<IActionResult> Index()
         {
             var result = await _articleService.GetAllByNonDeletedAsync();
-            if (result.ResultStatus==ResultStatus.Succes) return View(result.Data );
+            if (result.ResultStatus == ResultStatus.Succes) return View(result.Data);
             return NotFound();
 
         }
 
         [HttpGet]
-        public async Task<IActionResult>  Add()
+        public async Task<IActionResult> Add()
 
         {
             var result = await _categoryService.GetAllByNonDeletedAsync();
-            if (result.ResultStatus==ResultStatus.Succes)
+            if (result.ResultStatus == ResultStatus.Succes)
             {
                 return View(new ArticleAddViewModel
                 {
@@ -67,15 +64,15 @@ namespace ProgrammersBlog.MVC.Areas.Admin.Controllers
                     articleAddViewModel.ThumbnailFile, PictureType.Post);
                 articleAddDto.Thumbnail = imageResult.Data.FullName;
                 var result = await _articleService.AddAsync(articleAddDto, "Sezer Sürücü");
-                if (result.ResultStatus==ResultStatus.Succes)
+                if (result.ResultStatus == ResultStatus.Succes)
                 {
-                    TempData.Add("SuccessMassage",result.Message);
+                    TempData.Add("SuccessMassage", result.Message);
 
                     return RedirectToAction("Index", "Article");
                 }
                 else
                 {
-                    ModelState.AddModelError("",result.Message);
+                    ModelState.AddModelError("", result.Message);
                     return View(articleAddViewModel);
                 }
 

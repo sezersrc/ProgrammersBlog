@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ProgrammersBlog.Entities.Dtos
 {
@@ -23,7 +18,7 @@ namespace ProgrammersBlog.Entities.Dtos
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
-        
+
         [DisplayName("Beni Hatırla")]
         public bool RememberMe { get; set; }
     }

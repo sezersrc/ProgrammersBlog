@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ProgrammersBlog.Data.Migrations
 {
@@ -25,7 +24,7 @@ namespace ProgrammersBlog.Data.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-         
+
 
         }
     }

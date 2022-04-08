@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ProgrammersBlog.Services.Utilities
+﻿namespace ProgrammersBlog.Services.Utilities
 {
-     public static class Messages
+    public static class Messages
     {
         // Örnek kullanım Messages.Category.NotFound() 
 
@@ -16,7 +10,7 @@ namespace ProgrammersBlog.Services.Utilities
             {
                 if (isPlural) return "Hiçbir kategori bulunamadı.";
                 return "Böyle bir kategori bulunamadı. ";
-                
+
             }
 
             public static string Add(string categoryName)

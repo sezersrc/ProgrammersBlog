@@ -1,12 +1,11 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using ProgrammersBlog.Shared.Data.Abstract;
+using ProgrammersBlog.Shared.Entities.Abstract;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using ProgrammersBlog.Shared.Data.Abstract;
-using ProgrammersBlog.Shared.Entities.Abstract;
 
 namespace ProgrammersBlog.Shared.Data.Concrete.EntityFramework
 {
@@ -31,9 +30,9 @@ namespace ProgrammersBlog.Shared.Data.Concrete.EntityFramework
             return await _context.Set<TEntity>().AnyAsync(predicate);
         }
 
-        public async Task<int> CountAsync(Expression<Func<TEntity, bool>> predicate=null)
+        public async Task<int> CountAsync(Expression<Func<TEntity, bool>> predicate = null)
         {
-            return await (predicate==null ? _context.Set<TEntity>().CountAsync() : _context.Set<TEntity>().CountAsync(predicate));
+            return await (predicate == null ? _context.Set<TEntity>().CountAsync() : _context.Set<TEntity>().CountAsync(predicate));
         }
 
         public async Task DeleteAsync(TEntity entity)
@@ -65,7 +64,7 @@ namespace ProgrammersBlog.Shared.Data.Concrete.EntityFramework
         {
             IQueryable<TEntity> query = _context.Set<TEntity>();
             query = query.Where(predicate);
-           if (includeProperties.Any())
+            if (includeProperties.Any())
             {
                 foreach (var includeProperty in includeProperties)
                 {
@@ -78,9 +77,10 @@ namespace ProgrammersBlog.Shared.Data.Concrete.EntityFramework
 
         public async Task<TEntity> UpdateAsync(TEntity entity)
         {
-            await Task.Run(() => {   
+            await Task.Run(() =>
+            {
                 _context.Set<TEntity>().Update(entity);
-               
+
             });
             return entity;
         }

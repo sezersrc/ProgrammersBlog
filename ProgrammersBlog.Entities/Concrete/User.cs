@@ -1,14 +1,9 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
-using ProgrammersBlog.Shared.Entities.Abstract;
 
 namespace ProgrammersBlog.Entities.Concrete
 {
-    public class User:IdentityUser<int>
+    public class User : IdentityUser<int>
     {
         // identity yapısı
         public string Picture { get; set; }

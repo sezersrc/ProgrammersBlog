@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ProgrammersBlog.Data.Abstract;
+﻿using ProgrammersBlog.Data.Abstract;
 using ProgrammersBlog.Services.Abstract;
 using ProgrammersBlog.Shared.Utilities.Results.Abstract;
 using ProgrammersBlog.Shared.Utilities.Results.ComplexTypes;
 using ProgrammersBlog.Shared.Utilities.Results.Concrete;
+using System.Threading.Tasks;
 
 namespace ProgrammersBlog.Services.Concrete
 {
@@ -34,7 +30,7 @@ namespace ProgrammersBlog.Services.Concrete
 
         public async Task<IDataResult<int>> CountByNonDeletedAsync()
         {
-            var commentsCount = await _unitOfWork.Comments.CountAsync(c=>!c.IsDeleted);
+            var commentsCount = await _unitOfWork.Comments.CountAsync(c => !c.IsDeleted);
             if (commentsCount > -1)
             {
                 return new DataResult<int>(ResultStatus.Succes, commentsCount);

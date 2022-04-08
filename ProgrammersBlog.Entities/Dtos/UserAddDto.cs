@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Http;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 
 namespace ProgrammersBlog.Entities.Dtos
 {
-    public class UserAddDto 
+    public class UserAddDto
     {
         [DisplayName("Kullanıcı Adı")]
         [Required(ErrorMessage = "{0} boş geçilmemelidir !..")]

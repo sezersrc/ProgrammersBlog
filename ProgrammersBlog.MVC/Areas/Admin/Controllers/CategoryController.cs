@@ -1,16 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text.Json;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using ProgrammersBlog.Entities.Dtos;
 using ProgrammersBlog.MVC.Areas.Admin.Models;
 using ProgrammersBlog.Services.Abstract;
 using ProgrammersBlog.Shared.Utilities.Extensions;
 using ProgrammersBlog.Shared.Utilities.Results.ComplexTypes;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using System.Threading.Tasks;
 
 namespace ProgrammersBlog.MVC.Areas.Admin.Controllers
 {
@@ -44,8 +41,8 @@ namespace ProgrammersBlog.MVC.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = await _categoryService.AddAsync(categoryAddDto,"Sezer Sürücü");
-                if (result.ResultStatus==ResultStatus.Succes)
+                var result = await _categoryService.AddAsync(categoryAddDto, "Sezer Sürücü");
+                if (result.ResultStatus == ResultStatus.Succes)
                 {
                     var categoryAddAjaxModel = JsonSerializer.Serialize(new CategoryAddAjaxViewModel
                     {
@@ -68,9 +65,9 @@ namespace ProgrammersBlog.MVC.Areas.Admin.Controllers
         public async Task<IActionResult> Update(int categoryId)
         {
             var result = await _categoryService.GetCategoryUpdateDtoAsync(categoryId);
-            if (result.ResultStatus==ResultStatus.Succes)
+            if (result.ResultStatus == ResultStatus.Succes)
             {
-                return PartialView("_CategoryUpdatePartial",result.Data);
+                return PartialView("_CategoryUpdatePartial", result.Data);
             }
             else
             {
@@ -106,7 +103,7 @@ namespace ProgrammersBlog.MVC.Areas.Admin.Controllers
         public async Task<JsonResult> GetAllCategories()
         {
             var result = await _categoryService.GetAllByNonDeletedAsync();
-            var categories = JsonSerializer.Serialize(result.Data,new JsonSerializerOptions
+            var categories = JsonSerializer.Serialize(result.Data, new JsonSerializerOptions
             {
                 ReferenceHandler = ReferenceHandler.Preserve
             });

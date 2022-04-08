@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using ProgrammersBlog.Entities.Concrete;
+using System;
 
 namespace ProgrammersBlog.Data.Concrete.EntityFramework.Mappings
 {
-    public class CategoryMap:IEntityTypeConfiguration<Category>
+    public class CategoryMap : IEntityTypeConfiguration<Category>
     {
         public void Configure(EntityTypeBuilder<Category> builder)
         {
@@ -34,7 +30,7 @@ namespace ProgrammersBlog.Data.Concrete.EntityFramework.Mappings
             builder.HasData(new Category
             {
                 Id = 1,
-                Name = "C#" ,
+                Name = "C#",
                 Description = "C# Programlama dili ile ilgili en güncel bilgiler ",
                 IsActive = true,
                 IsDeleted = false,

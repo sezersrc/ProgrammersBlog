@@ -1,11 +1,9 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using ProgrammersBlog.Entities.Concrete;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using ProgrammersBlog.Entities.Concrete;
 
 namespace ProgrammersBlog.MVC.Areas.Admin.Models
 {
@@ -24,7 +22,7 @@ namespace ProgrammersBlog.MVC.Areas.Admin.Models
 
         [DisplayName("Küçük Resim")]
         [Required(ErrorMessage = "{0} alanı boş geçilmemelidir !.. ")]
-       
+
         public IFormFile ThumbnailFile { get; set; }
 
         [DisplayName("Tarih")]
@@ -54,7 +52,7 @@ namespace ProgrammersBlog.MVC.Areas.Admin.Models
 
         public int CategoryId { get; set; }
 
-        
+
 
         [DisplayName("Aktif mi ?")]
         [Required(ErrorMessage = "{0} alanı boş geçilmemelidir !.. ")]
@@ -62,7 +60,7 @@ namespace ProgrammersBlog.MVC.Areas.Admin.Models
 
         [DisplayName("Silinmiş mi ?")]
         [Required(ErrorMessage = "{0} alanı boş geçilmemelidir !.. ")]
-       
+
 
         public IList<Category> Categories { get; set; }
     }

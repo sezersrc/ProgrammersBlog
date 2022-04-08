@@ -1,15 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ProgrammersBlog.Entities.Concrete;
 using ProgrammersBlog.MVC.Areas.Admin.Models;
 using ProgrammersBlog.Services.Abstract;
 using ProgrammersBlog.Shared.Utilities.Results.ComplexTypes;
+using System.Threading.Tasks;
 
 namespace ProgrammersBlog.MVC.Areas.Admin.Controllers
 {
@@ -31,7 +28,7 @@ namespace ProgrammersBlog.MVC.Areas.Admin.Controllers
         }
 
 
-        public  async Task<IActionResult>Index()
+        public async Task<IActionResult> Index()
         {
             var categoriesCountResult = await _categoryService.CountByNonDeletedAsync();
             var articlesCountResult = await _articleService.CountByNonDeletedAsync();
@@ -39,9 +36,9 @@ namespace ProgrammersBlog.MVC.Areas.Admin.Controllers
             var usersCount = await _userManager.Users.CountAsync();
             var articlesResult = await _articleService.GetAllAsync();
 
-            if (categoriesCountResult.ResultStatus==ResultStatus.Succes&&articlesCountResult.ResultStatus==ResultStatus.Succes&&commentsCountResult.ResultStatus==ResultStatus.Succes&&usersCount>-1&&articlesResult.ResultStatus==ResultStatus.Succes)
+            if (categoriesCountResult.ResultStatus == ResultStatus.Succes && articlesCountResult.ResultStatus == ResultStatus.Succes && commentsCountResult.ResultStatus == ResultStatus.Succes && usersCount > -1 && articlesResult.ResultStatus == ResultStatus.Succes)
             {
-                return View( new DashboardViewModel
+                return View(new DashboardViewModel
                 {
                     CategoriesCount = categoriesCountResult.Data,
                     ArticlesCount = articlesCountResult.Data,

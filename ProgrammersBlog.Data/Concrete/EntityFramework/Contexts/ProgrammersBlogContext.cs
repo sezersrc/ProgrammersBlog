@@ -1,21 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using ProgrammersBlog.Data.Concrete.EntityFramework.Mappings;
 using ProgrammersBlog.Entities.Concrete;
 
 namespace ProgrammersBlog.Data.Concrete.EntityFramework.Contexts
 {
-    public class ProgrammersBlogContext : IdentityDbContext<User,Role,int, UserClaim,UserRole,UserLogin,RoleClaim,UserToken>
+    public class ProgrammersBlogContext : IdentityDbContext<User, Role, int, UserClaim, UserRole, UserLogin, RoleClaim, UserToken>
     {
         public DbSet<Article> Articles { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Comment> Comments { get; set; }
-       
+
 
         //ovverridebuilder 
         //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -26,7 +21,7 @@ namespace ProgrammersBlog.Data.Concrete.EntityFramework.Contexts
 
         //}
 
-        public ProgrammersBlogContext(DbContextOptions<ProgrammersBlogContext> options):base(options)
+        public ProgrammersBlogContext(DbContextOptions<ProgrammersBlogContext> options) : base(options)
         {
             // AppsettingsJson
         }

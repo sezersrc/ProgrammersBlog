@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Http;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 
 namespace ProgrammersBlog.Entities.Dtos
 {
@@ -26,7 +21,7 @@ namespace ProgrammersBlog.Entities.Dtos
         [MinLength(10, ErrorMessage = "{0} {1} karakterden küçük olamaz. ")]
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
-        
+
 
         [DisplayName("Telefon Numarası")]
         [Required(ErrorMessage = "{0} boş geçilmemelidir !..")]
@@ -35,10 +30,10 @@ namespace ProgrammersBlog.Entities.Dtos
         [DataType(DataType.PhoneNumber)]
 
         public string PhoneNumber { get; set; }
-        [DisplayName("Resim Ekle")]       
+        [DisplayName("Resim Ekle")]
         [DataType(DataType.Upload)]
         public IFormFile PictureFile { get; set; }
-       
+
         [DisplayName("Resim")]
         public string Picture { get; set; }
     }

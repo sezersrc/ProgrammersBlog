@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using ProgrammersBlog.Entities.Concrete;
+using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ProgrammersBlog.Entities.Concrete;
 
 namespace ProgrammersBlog.Entities.Dtos
 {

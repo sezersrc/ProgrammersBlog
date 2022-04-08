@@ -1,21 +1,15 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using ProgrammersBlog.MVC.AutoMapper.Profiles;
-using ProgrammersBlog.MVC.Controllers;
 using ProgrammersBlog.MVC.Helpers.Abstract;
 using ProgrammersBlog.MVC.Helpers.Concrete;
 using ProgrammersBlog.Services.AutoMapper.Profiles;
 using ProgrammersBlog.Services.Extensions;
+using System.Text.Json.Serialization;
 
 namespace ProgrammersBlog.MVC
 {
@@ -34,13 +28,13 @@ namespace ProgrammersBlog.MVC
             services.AddControllersWithViews().AddRazorRuntimeCompilation().AddJsonOptions(opt =>
             {
                 opt.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()); // Enum deðerleri döndürür (JsonNamingPolicy:CamelCase olursa string girebilirsin)
-                opt.JsonSerializerOptions.ReferenceHandler=ReferenceHandler.Preserve;// iç içe olan (nested ) json'A çevirir.
+                opt.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;// iç içe olan (nested ) json'A çevirir.
             }); // MVC olduðunu belirteci && Razor Runtime Compalition . // optJson'A dönüþtürmek için.
             services.AddSession();
-            services.AddAutoMapper(typeof(CategoryProfile),typeof(ArticleProfile),typeof(UserProfile),typeof(ViewModelsProfile)); // *Profil sýnýfý olmak zorunda Derlenme esnasýnda AutoMapper'ý derliyor . Mapping sýnýflarýný çaðýrýyor.
+            services.AddAutoMapper(typeof(CategoryProfile), typeof(ArticleProfile), typeof(UserProfile), typeof(ViewModelsProfile)); // *Profil sýnýfý olmak zorunda Derlenme esnasýnda AutoMapper'ý derliyor . Mapping sýnýflarýný çaðýrýyor.
 
             // Service katmanýndan servis yüklenmek . Data'ya direk ulaþmýyor Service >Data aktarýp oradan çekiyor.
-            services.LoadMyServices(connectionString:Configuration.GetConnectionString("LocalDB")); // Local DB'de
+            services.LoadMyServices(connectionString: Configuration.GetConnectionString("LocalDB")); // Local DB'de
             services.AddScoped<IImageHelper, ImageHelper>();
             services.ConfigureApplicationCookie(options =>
             {
