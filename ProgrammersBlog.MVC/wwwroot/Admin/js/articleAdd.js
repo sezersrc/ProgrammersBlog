@@ -31,7 +31,8 @@
     $('#categoryList').select2({
         theme: "bootstrap-5",
         placeholder: "Lütfen bir kategori seçiniz",
-        allowClear : true
+        allowClear: false,
+        tags: true
     });
 
     /*Select2 ends  */

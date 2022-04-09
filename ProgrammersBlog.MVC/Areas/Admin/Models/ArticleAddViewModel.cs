@@ -47,10 +47,9 @@ namespace ProgrammersBlog.MVC.Areas.Admin.Models
 
         public string SeoTags { get; set; }
 
-        [DisplayName("Kategori")]
-        [Required(ErrorMessage = "{0} alanı boş geçilmemelidir !.. ")]
+        
 
-        public int CategoryId { get; set; }
+        
 
 
 
@@ -58,10 +57,10 @@ namespace ProgrammersBlog.MVC.Areas.Admin.Models
         [Required(ErrorMessage = "{0} alanı boş geçilmemelidir !.. ")]
         public bool IsActive { get; set; }
 
-        [DisplayName("Silinmiş mi ?")]
+       
+        [DisplayName("Kategori")]
         [Required(ErrorMessage = "{0} alanı boş geçilmemelidir !.. ")]
-
-
+        public int CategoryId { get; set; }
         public IList<Category> Categories { get; set; }
     }
 }

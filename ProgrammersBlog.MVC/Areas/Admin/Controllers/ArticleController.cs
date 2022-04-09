@@ -105,5 +105,48 @@ namespace ProgrammersBlog.MVC.Areas.Admin.Controllers
             }
 
         }
+
+        [HttpPost]
+        public async Task<IActionResult> Update(ArticleUpdateViewModel articleUpdateViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                bool isNewThumbnailUploaded = false;
+                var oldThumbNail = articleUpdateViewModel.Thumbnail;
+                if (articleUpdateViewModel.ThumbnailFile!=null)
+                {
+                    var uploadedImageResult = await ImageHelper.Upload(articleUpdateViewModel.Title,
+                        articleUpdateViewModel.ThumbnailFile, PictureType.Post);
+                    articleUpdateViewModel.Thumbnail = uploadedImageResult.ResultStatus == ResultStatus.Succes
+                        ? uploadedImageResult.Data.FullName
+                        : "postImages/defaultThumbnail.jpg";
+                    if (oldThumbNail!= "postImages/defaultThumbnail.jpg")
+                    {
+                        isNewThumbnailUploaded = true;
+                    }
+
+                    var articleUpdateDto = Mapper.Map<ArticleUpdateDto>(articleUpdateViewModel);
+                    var result = await _articleService.UpdateAsync(articleUpdateDto, LoggedInUser.UserName);
+                    if (result.ResultStatus==ResultStatus.Succes)
+                    {
+                        if (isNewThumbnailUploaded)
+                        {
+                            ImageHelper.Delete(oldThumbNail);
+                        }
+                        TempData.Add("SuccessMessage",result.Message);
+                        return RedirectToAction("Index", "Article");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("",result.Message);
+                    }
+                }
+
+            }
+
+            var categories = await _categoryService.GetAllByNonDeletedAndActiveAsync();
+            articleUpdateViewModel.Categories = categories.Data.Categories;
+            return View(articleUpdateViewModel);
+        }
     }
 }

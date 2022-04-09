@@ -36,7 +36,7 @@ namespace ProgrammersBlog.Entities.Dtos
         [Required(ErrorMessage = "{0} alanı boş geçilmemelidir !.. ")]
         [MaxLength(50, ErrorMessage = "{0} alanı  {1} karakterden büyük olmamalıdır")]
         [MinLength(0, ErrorMessage = "{0} alanı  {1} karakterden küçük olmamalıdır")]
-        public string SeoAuther { get; set; }
+        public string SeoAuthor { get; set; }
 
         [DisplayName("Seo Açıklama")]
         [Required(ErrorMessage = "{0} alanı boş geçilmemelidir !.. ")]
