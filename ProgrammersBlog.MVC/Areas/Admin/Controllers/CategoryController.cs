@@ -46,7 +46,7 @@ namespace ProgrammersBlog.MVC.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 var result = await _categoryService.AddAsync(categoryAddDto, LoggedInUser.UserName);
-                if (result.ResultStatus == ResultStatus.Succes)
+                if (result.ResultStatus == ResultStatus.Success)
                 {
                     var categoryAddAjaxModel = JsonSerializer.Serialize(new CategoryAddAjaxViewModel
                     {
@@ -69,7 +69,7 @@ namespace ProgrammersBlog.MVC.Areas.Admin.Controllers
         public async Task<IActionResult> Update(int categoryId)
         {
             var result = await _categoryService.GetCategoryUpdateDtoAsync(categoryId);
-            if (result.ResultStatus == ResultStatus.Succes)
+            if (result.ResultStatus == ResultStatus.Success)
             {
                 return PartialView("_CategoryUpdatePartial", result.Data);
             }
@@ -86,7 +86,7 @@ namespace ProgrammersBlog.MVC.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 var result = await _categoryService.UpdateAsync(categoryUpdateDto, LoggedInUser.UserName);
-                if (result.ResultStatus == ResultStatus.Succes)
+                if (result.ResultStatus == ResultStatus.Success)
                 {
                     var categoryUpdateAjaxModel = JsonSerializer.Serialize(new CategoryUpdateAjaxViewModel
                     {

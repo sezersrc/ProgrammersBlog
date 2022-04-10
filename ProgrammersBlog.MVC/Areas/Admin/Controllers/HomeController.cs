@@ -36,7 +36,7 @@ namespace ProgrammersBlog.MVC.Areas.Admin.Controllers
             var usersCount = await _userManager.Users.CountAsync();
             var articlesResult = await _articleService.GetAllAsync();
 
-            if (categoriesCountResult.ResultStatus == ResultStatus.Succes && articlesCountResult.ResultStatus == ResultStatus.Succes && commentsCountResult.ResultStatus == ResultStatus.Succes && usersCount > -1 && articlesResult.ResultStatus == ResultStatus.Succes)
+            if (categoriesCountResult.ResultStatus == ResultStatus.Success && articlesCountResult.ResultStatus == ResultStatus.Success && commentsCountResult.ResultStatus == ResultStatus.Success && usersCount > -1 && articlesResult.ResultStatus == ResultStatus.Success)
             {
                 return View(new DashboardViewModel
                 {

@@ -45,7 +45,7 @@ namespace ProgrammersBlog.MVC.Helpers.Concrete
 
                 };
                 System.IO.File.Delete(fileToDelete);
-                return new DataResult<ImageDeletedDto>(ResultStatus.Succes, imageDeletedDto);
+                return new DataResult<ImageDeletedDto>(ResultStatus.Success, imageDeletedDto);
             }
             else
             {
@@ -90,7 +90,7 @@ namespace ProgrammersBlog.MVC.Helpers.Concrete
             string message = pictureType == PictureType.User
                 ? $"{name} adlı kullanıcının resmi başarıyla yüklenmiştir."
                 : $"{name} adlı makalenin resmi başarıyla yüklenmiştir. ";
-            return new DataResult<ImageUploadedDto>(ResultStatus.Succes, message, new ImageUploadedDto
+            return new DataResult<ImageUploadedDto>(ResultStatus.Success, message, new ImageUploadedDto
             {
                 FullName = $"{folderName}/{newFileName}",
                 OldName = oldFileName,

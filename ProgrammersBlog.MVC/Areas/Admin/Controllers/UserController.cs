@@ -45,7 +45,7 @@ namespace ProgrammersBlog.MVC.Areas.Admin.Controllers
             return View(new UserListDto
             {
                 Users = users,
-                ResultStatus = ResultStatus.Succes
+                ResultStatus = ResultStatus.Success
             });
         }
 
@@ -108,7 +108,7 @@ namespace ProgrammersBlog.MVC.Areas.Admin.Controllers
             var userListDto = JsonSerializer.Serialize(new UserListDto
             {
                 Users = users,
-                ResultStatus = ResultStatus.Succes
+                ResultStatus = ResultStatus.Success
             }, new JsonSerializerOptions
             {
                 ReferenceHandler = ReferenceHandler.Preserve
@@ -129,7 +129,7 @@ namespace ProgrammersBlog.MVC.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 var uploadedImageDataResult = await _imageHelper.Upload(userAddDto.UserName, userAddDto.PictureFile, PictureType.User);
-                userAddDto.Picture = uploadedImageDataResult.ResultStatus == ResultStatus.Succes
+                userAddDto.Picture = uploadedImageDataResult.ResultStatus == ResultStatus.Success
                     ? uploadedImageDataResult.Data.FullName
                     : "userImages/defaultUser.png";
 
@@ -141,7 +141,7 @@ namespace ProgrammersBlog.MVC.Areas.Admin.Controllers
                     {
                         UserDto = new UserDto
                         {
-                            ResultStatus = ResultStatus.Succes,
+                            ResultStatus = ResultStatus.Success,
                             Message = $"{user.UserName} adlı kullanıcı adına sahip kullanıcı başarıyla eklenmiştir",
                             User = user
                         },
@@ -190,7 +190,7 @@ namespace ProgrammersBlog.MVC.Areas.Admin.Controllers
             {
                 var deletedUser = JsonSerializer.Serialize(new UserDto
                 {
-                    ResultStatus = ResultStatus.Succes,
+                    ResultStatus = ResultStatus.Success,
                     Message = $"{user.UserName} adlı kullanıcı başarıyla silinmiştir ",
                     User = user
 
@@ -238,7 +238,7 @@ namespace ProgrammersBlog.MVC.Areas.Admin.Controllers
                 if (userUpdateDto.PictureFile != null)
                 {
                     var uploadedImageDataResult = await _imageHelper.Upload(userUpdateDto.UserName, userUpdateDto.PictureFile, PictureType.User);
-                    userUpdateDto.Picture = uploadedImageDataResult.ResultStatus == ResultStatus.Succes
+                    userUpdateDto.Picture = uploadedImageDataResult.ResultStatus == ResultStatus.Success
                         ? uploadedImageDataResult.Data.FullName
                         : "userImages/defaultUser.png";
                     if (oldUserPicture != "userImages/defaultUser.png")
@@ -259,7 +259,7 @@ namespace ProgrammersBlog.MVC.Areas.Admin.Controllers
                     {
                         UserDto = new UserDto
                         {
-                            ResultStatus = ResultStatus.Succes,
+                            ResultStatus = ResultStatus.Success,
                             Message = $"{updatedUser.UserName} adlı kullanıcı başarıyla güncellenmiştir",
                             User = updatedUser
                         },
@@ -314,7 +314,7 @@ namespace ProgrammersBlog.MVC.Areas.Admin.Controllers
                 if (userUpdateDto.PictureFile != null)
                 {
                     var uploadedImageDataResult = await _imageHelper.Upload(userUpdateDto.UserName, userUpdateDto.PictureFile, PictureType.User);
-                    userUpdateDto.Picture = uploadedImageDataResult.ResultStatus == ResultStatus.Succes
+                    userUpdateDto.Picture = uploadedImageDataResult.ResultStatus == ResultStatus.Success
                         ? uploadedImageDataResult.Data.FullName
                         : "userImages/defaultUser.png";
                     if (oldUserPicture != "userImages/defaultUser.png")

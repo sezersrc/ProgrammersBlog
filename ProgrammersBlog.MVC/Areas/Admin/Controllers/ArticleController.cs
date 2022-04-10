@@ -37,7 +37,7 @@ namespace ProgrammersBlog.MVC.Areas.Admin.Controllers
         public async Task<IActionResult> Index()
         {
             var result = await _articleService.GetAllByNonDeletedAsync();
-            if (result.ResultStatus == ResultStatus.Succes) return View(result.Data);
+            if (result.ResultStatus == ResultStatus.Success) return View(result.Data);
             return NotFound();
 
         }
@@ -48,7 +48,7 @@ namespace ProgrammersBlog.MVC.Areas.Admin.Controllers
         {
             var result = await _categoryService.GetAllByNonDeletedAndActiveAsync();
             
-            if (result.ResultStatus == ResultStatus.Succes)
+            if (result.ResultStatus == ResultStatus.Success)
             {
                 return View(new ArticleAddViewModel
                 {
@@ -73,7 +73,7 @@ namespace ProgrammersBlog.MVC.Areas.Admin.Controllers
                 articleAddDto.Thumbnail = imageResult.Data.FullName;
                 
                 var result = await _articleService.AddAsync(articleAddDto, LoggedInUser.UserName,LoggedInUser.Id);
-                if (result.ResultStatus == ResultStatus.Succes)
+                if (result.ResultStatus == ResultStatus.Success)
                 {
                     _toastNotification.AddSuccessToastMessage(result.Message,new ToastrOptions
                     {
@@ -101,7 +101,7 @@ namespace ProgrammersBlog.MVC.Areas.Admin.Controllers
         {
             var articleResult = await _articleService.GetArticleUpdateDtoAsync(articleId);
             var categoriesResult = await _categoryService.GetAllByNonDeletedAndActiveAsync();
-            if (articleResult.ResultStatus==ResultStatus.Succes&&categoriesResult.ResultStatus==ResultStatus.Succes)
+            if (articleResult.ResultStatus==ResultStatus.Success&&categoriesResult.ResultStatus==ResultStatus.Success)
             {
                 var articleUpdateViewModel = Mapper.Map<ArticleUpdateViewModel>(articleResult.Data);
                 articleUpdateViewModel.Categories = categoriesResult.Data.Categories;
@@ -125,7 +125,7 @@ namespace ProgrammersBlog.MVC.Areas.Admin.Controllers
                 {
                     var uploadedImageResult = await ImageHelper.Upload(articleUpdateViewModel.Title,
                         articleUpdateViewModel.ThumbnailFile, PictureType.Post);
-                    articleUpdateViewModel.Thumbnail = uploadedImageResult.ResultStatus == ResultStatus.Succes
+                    articleUpdateViewModel.Thumbnail = uploadedImageResult.ResultStatus == ResultStatus.Success
                         ? uploadedImageResult.Data.FullName
                         : "postImages/defaultThumbnail.jpg";
                     if (oldThumbNail!= "postImages/defaultThumbnail.jpg")
@@ -137,7 +137,7 @@ namespace ProgrammersBlog.MVC.Areas.Admin.Controllers
                 }
                 var articleUpdateDto = Mapper.Map<ArticleUpdateDto>(articleUpdateViewModel);
                 var result = await _articleService.UpdateAsync(articleUpdateDto, LoggedInUser.UserName);
-                if (result.ResultStatus == ResultStatus.Succes)
+                if (result.ResultStatus == ResultStatus.Success)
                 {
                     if (isNewThumbnailUploaded)
                     {
