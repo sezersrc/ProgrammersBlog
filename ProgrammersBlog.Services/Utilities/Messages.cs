@@ -43,7 +43,23 @@
 
             }
 
-            // diğerlerini projeden ekle.
+            public static string Add(string articleTitle)
+            {
+                return $"{articleTitle} başlıklı makale başarıyla eklenmiştir.";
+            }
+
+            public static string Update(string articleTitle)
+            {
+                return $"{articleTitle} başlıklı makale başarıyla güncellenmiştir.";
+            }
+            public static string Delete(string articleTitle)
+            {
+                return $"{articleTitle} başlıklı makale başarıyla silinmiştir.";
+            }
+            public static string HardDelete(string articleTitle)
+            {
+                return $"{articleTitle} başlıklı makale başarıyla veritabanından silinmiştir.";
+            }
 
         }
     }

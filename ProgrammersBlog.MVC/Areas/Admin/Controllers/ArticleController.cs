@@ -1,4 +1,6 @@
-﻿using AutoMapper;
+﻿using System.Text.Json;
+using System.Text.Json.Serialization;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using ProgrammersBlog.Entities.ComplexTypes;
 using ProgrammersBlog.Entities.Dtos;
@@ -8,7 +10,10 @@ using ProgrammersBlog.Services.Abstract;
 using ProgrammersBlog.Shared.Utilities.Results.ComplexTypes;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
+using Newtonsoft.Json;
+using NToastNotify;
 using ProgrammersBlog.Entities.Concrete;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace ProgrammersBlog.MVC.Areas.Admin.Controllers
 {
@@ -18,13 +23,13 @@ namespace ProgrammersBlog.MVC.Areas.Admin.Controllers
     {
         private readonly IArticleService _articleService;
         private readonly ICategoryService _categoryService;
-        
+        private readonly IToastNotification _toastNotification;
 
-        public ArticleController(IArticleService articleService, ICategoryService categoryService,UserManager<User> userManager  ,IMapper mapper, IImageHelper imageHelper):base(userManager,mapper,imageHelper)
+        public ArticleController(IArticleService articleService, ICategoryService categoryService,UserManager<User> userManager  ,IMapper mapper, IImageHelper imageHelper, IToastNotification toastNotification):base(userManager,mapper,imageHelper)
         {
             _articleService = articleService;
             _categoryService = categoryService;
-            
+            _toastNotification = toastNotification;
         }
 
 
@@ -70,7 +75,10 @@ namespace ProgrammersBlog.MVC.Areas.Admin.Controllers
                 var result = await _articleService.AddAsync(articleAddDto, LoggedInUser.UserName,LoggedInUser.Id);
                 if (result.ResultStatus == ResultStatus.Succes)
                 {
-                    TempData.Add("SuccessMassage", result.Message);
+                    _toastNotification.AddSuccessToastMessage(result.Message,new ToastrOptions
+                    {
+                        Title = "Başarılı işlem!"
+                    });
 
                     return RedirectToAction("Index", "Article");
                 }
@@ -125,21 +133,25 @@ namespace ProgrammersBlog.MVC.Areas.Admin.Controllers
                         isNewThumbnailUploaded = true;
                     }
 
-                    var articleUpdateDto = Mapper.Map<ArticleUpdateDto>(articleUpdateViewModel);
-                    var result = await _articleService.UpdateAsync(articleUpdateDto, LoggedInUser.UserName);
-                    if (result.ResultStatus==ResultStatus.Succes)
+                    
+                }
+                var articleUpdateDto = Mapper.Map<ArticleUpdateDto>(articleUpdateViewModel);
+                var result = await _articleService.UpdateAsync(articleUpdateDto, LoggedInUser.UserName);
+                if (result.ResultStatus == ResultStatus.Succes)
+                {
+                    if (isNewThumbnailUploaded)
                     {
-                        if (isNewThumbnailUploaded)
-                        {
-                            ImageHelper.Delete(oldThumbNail);
-                        }
-                        TempData.Add("SuccessMessage",result.Message);
-                        return RedirectToAction("Index", "Article");
+                        ImageHelper.Delete(oldThumbNail);
                     }
-                    else
+                    _toastNotification.AddSuccessToastMessage(result.Message, new ToastrOptions
                     {
-                        ModelState.AddModelError("",result.Message);
-                    }
+                        Title = "Başarılı işlem!"
+                    });
+                    return RedirectToAction("Index", "Article");
+                }
+                else
+                {
+                    ModelState.AddModelError("", result.Message);
                 }
 
             }
@@ -147,6 +159,27 @@ namespace ProgrammersBlog.MVC.Areas.Admin.Controllers
             var categories = await _categoryService.GetAllByNonDeletedAndActiveAsync();
             articleUpdateViewModel.Categories = categories.Data.Categories;
             return View(articleUpdateViewModel);
+        }
+
+        [HttpPost]
+        public async Task<JsonResult> Delete(int articleId)
+        {
+            var result = await _articleService.DeleteAsync(articleId, LoggedInUser.UserName);
+            var articleResult = JsonSerializer.Serialize(result);
+            return Json(articleResult);
+        }
+
+        [HttpGet]
+
+        public async Task<JsonResult> GetAllArticles()
+        {
+            var articles = await _articleService.GetAllByNonDeletedAndActiveAsync();
+            var articleResult = JsonSerializer.Serialize(articles,new JsonSerializerOptions
+            {
+                ReferenceHandler = ReferenceHandler.Preserve
+            });
+
+            return Json(articleResult);
         }
     }
 }

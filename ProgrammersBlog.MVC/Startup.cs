@@ -29,7 +29,8 @@ namespace ProgrammersBlog.MVC
             {
                 opt.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()); // Enum deðerleri döndürür (JsonNamingPolicy:CamelCase olursa string girebilirsin)
                 opt.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;// iç içe olan (nested ) json'A çevirir.
-            }); // MVC olduðunu belirteci && Razor Runtime Compalition . // optJson'A dönüþtürmek için.
+                
+            }).AddNToastNotifyToastr(); // MVC olduðunu belirteci && Razor Runtime Compalition . // optJson'A dönüþtürmek için.
             services.AddSession();
             services.AddAutoMapper(typeof(CategoryProfile), typeof(ArticleProfile), typeof(UserProfile), typeof(ViewModelsProfile)); // *Profil sýnýfý olmak zorunda Derlenme esnasýnda AutoMapper'ý derliyor . Mapping sýnýflarýný çaðýrýyor.
 
@@ -79,7 +80,7 @@ namespace ProgrammersBlog.MVC
 
             app.UseAuthentication(); // Identity => Authentication 
             app.UseAuthorization();  // Identity => Authorization  
-
+            app.UseNToastNotify();
 
             app.UseEndpoints(endpoints =>
             {
