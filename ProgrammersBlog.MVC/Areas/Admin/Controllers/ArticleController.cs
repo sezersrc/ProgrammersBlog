@@ -9,6 +9,7 @@ using ProgrammersBlog.MVC.Helpers.Abstract;
 using ProgrammersBlog.Services.Abstract;
 using ProgrammersBlog.Shared.Utilities.Results.ComplexTypes;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Newtonsoft.Json;
 using NToastNotify;
@@ -32,7 +33,7 @@ namespace ProgrammersBlog.MVC.Areas.Admin.Controllers
             _toastNotification = toastNotification;
         }
 
-
+        [Authorize(Roles = "SuperAdmin,Article.Read")]
         [HttpGet]
         public async Task<IActionResult> Index()
         {
@@ -41,7 +42,7 @@ namespace ProgrammersBlog.MVC.Areas.Admin.Controllers
             return NotFound();
 
         }
-
+        [Authorize(Roles = "SuperAdmin,Article.Create")]
         [HttpGet]
         public async Task<IActionResult> Add()
 
@@ -60,6 +61,8 @@ namespace ProgrammersBlog.MVC.Areas.Admin.Controllers
             return NotFound();
 
         }
+
+        [Authorize(Roles = "SuperAdmin,Article.Create")]
         [HttpPost]
         public async Task<IActionResult> Add(ArticleAddViewModel articleAddViewModel)
 
@@ -96,6 +99,8 @@ namespace ProgrammersBlog.MVC.Areas.Admin.Controllers
             return View(articleAddViewModel);
 
         }
+
+        [Authorize(Roles = "SuperAdmin,Article.Update")]
         [HttpGet]
         public async Task<IActionResult> Update(int articleId)
         {
@@ -114,6 +119,7 @@ namespace ProgrammersBlog.MVC.Areas.Admin.Controllers
 
         }
 
+        [Authorize(Roles = "SuperAdmin,Article.Update")]
         [HttpPost]
         public async Task<IActionResult> Update(ArticleUpdateViewModel articleUpdateViewModel)
         {
@@ -161,6 +167,7 @@ namespace ProgrammersBlog.MVC.Areas.Admin.Controllers
             return View(articleUpdateViewModel);
         }
 
+        [Authorize(Roles = "SuperAdmin,Article.Delete")]
         [HttpPost]
         public async Task<JsonResult> Delete(int articleId)
         {
@@ -169,6 +176,7 @@ namespace ProgrammersBlog.MVC.Areas.Admin.Controllers
             return Json(articleResult);
         }
 
+        [Authorize(Roles = "SuperAdmin,Article.Read")]
         [HttpGet]
 
         public async Task<JsonResult> GetAllArticles()
