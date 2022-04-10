@@ -50,6 +50,13 @@ namespace ProgrammersBlog.MVC.Areas.Admin.Controllers
         }
 
         [HttpGet]
+        public async Task<PartialViewResult> GetDetail(int userId)
+        {
+            var user = await _userManager.Users.SingleOrDefaultAsync(u => u.Id == userId);
+            return PartialView("_GetDetailPartial", new UserDto { User = user });
+        }
+
+        [HttpGet]
         public IActionResult Login()
         {
             return View("UserLogin");
