@@ -12,7 +12,7 @@ namespace ProgrammersBlog.Services.Abstract
         Task<IDataResult<ArticleListDto>> GetAllByNonDeletedAsync();
 
         Task<IDataResult<ArticleListDto>> GetAllByNonDeletedAndActiveAsync();
-
+        Task<IDataResult<ArticleListDto>> GetAllByDeletedAsync();
         Task<IDataResult<ArticleListDto>> GetByCategoryAsync(int categoryId);
 
         Task<IResult>
@@ -21,6 +21,7 @@ namespace ProgrammersBlog.Services.Abstract
         Task<IResult> UpdateAsync(ArticleUpdateDto articleUpdateDto, string modifiedByName);
         Task<IResult> DeleteAsync(int articleId, string modifiedByName);
         Task<IResult> HardDeleteAsync(int articleId);
+        Task<IResult> UndoDeleteAsync(int articleId, string modifiedByName);
         Task<IDataResult<int>> CountAsync();
         Task<IDataResult<int>> CountByNonDeletedAsync();
     }
