@@ -26,7 +26,7 @@ namespace ProgrammersBlog.MVC.Areas.Admin.Controllers
         private readonly ICategoryService _categoryService;
         private readonly IToastNotification _toastNotification;
 
-        public ArticleController(IArticleService articleService, ICategoryService categoryService,UserManager<User> userManager  ,IMapper mapper, IImageHelper imageHelper, IToastNotification toastNotification):base(userManager,mapper,imageHelper)
+        public ArticleController(IArticleService articleService, ICategoryService categoryService, UserManager<User> userManager, IMapper mapper, IImageHelper imageHelper, IToastNotification toastNotification) : base(userManager, mapper, imageHelper)
         {
             _articleService = articleService;
             _categoryService = categoryService;
@@ -48,13 +48,13 @@ namespace ProgrammersBlog.MVC.Areas.Admin.Controllers
 
         {
             var result = await _categoryService.GetAllByNonDeletedAndActiveAsync();
-            
+
             if (result.ResultStatus == ResultStatus.Success)
             {
                 return View(new ArticleAddViewModel
                 {
                     Categories = result.Data.Categories
-                    
+
                 });
             }
 
@@ -67,18 +67,18 @@ namespace ProgrammersBlog.MVC.Areas.Admin.Controllers
         public async Task<IActionResult> Add(ArticleAddViewModel articleAddViewModel)
 
         {
-            
+
             if (ModelState.IsValid)
             {
                 var articleAddDto = Mapper.Map<ArticleAddDto>(articleAddViewModel); // Base'den gelen Mapper
                 var imageResult = await ImageHelper.Upload(articleAddViewModel.Title,
                     articleAddViewModel.ThumbnailFile, PictureType.Post);
                 articleAddDto.Thumbnail = imageResult.Data.FullName;
-                
-                var result = await _articleService.AddAsync(articleAddDto, LoggedInUser.UserName,LoggedInUser.Id);
-                if (result.ResultStatus==ResultStatus.Success)
+
+                var result = await _articleService.AddAsync(articleAddDto, LoggedInUser.UserName, LoggedInUser.Id);
+                if (result.ResultStatus == ResultStatus.Success)
                 {
-                    _toastNotification.AddSuccessToastMessage(result.Message,new ToastrOptions
+                    _toastNotification.AddSuccessToastMessage(result.Message, new ToastrOptions
                     {
                         Title = "Başarılı işlem!"
                     });
@@ -88,7 +88,7 @@ namespace ProgrammersBlog.MVC.Areas.Admin.Controllers
                 else
                 {
                     ModelState.AddModelError("", result.Message);
-                    
+
                 }
 
 
@@ -106,7 +106,7 @@ namespace ProgrammersBlog.MVC.Areas.Admin.Controllers
         {
             var articleResult = await _articleService.GetArticleUpdateDtoAsync(articleId);
             var categoriesResult = await _categoryService.GetAllByNonDeletedAndActiveAsync();
-            if (articleResult.ResultStatus==ResultStatus.Success&&categoriesResult.ResultStatus==ResultStatus.Success)
+            if (articleResult.ResultStatus == ResultStatus.Success && categoriesResult.ResultStatus == ResultStatus.Success)
             {
                 var articleUpdateViewModel = Mapper.Map<ArticleUpdateViewModel>(articleResult.Data);
                 articleUpdateViewModel.Categories = categoriesResult.Data.Categories;
@@ -127,19 +127,19 @@ namespace ProgrammersBlog.MVC.Areas.Admin.Controllers
             {
                 bool isNewThumbnailUploaded = false;
                 var oldThumbNail = articleUpdateViewModel.Thumbnail;
-                if (articleUpdateViewModel.ThumbnailFile!=null)
+                if (articleUpdateViewModel.ThumbnailFile != null)
                 {
                     var uploadedImageResult = await ImageHelper.Upload(articleUpdateViewModel.Title,
                         articleUpdateViewModel.ThumbnailFile, PictureType.Post);
                     articleUpdateViewModel.Thumbnail = uploadedImageResult.ResultStatus == ResultStatus.Success
                         ? uploadedImageResult.Data.FullName
                         : "postImages/defaultThumbnail.jpg";
-                    if (oldThumbNail!= "postImages/defaultThumbnail.jpg")
+                    if (oldThumbNail != "postImages/defaultThumbnail.jpg")
                     {
                         isNewThumbnailUploaded = true;
                     }
 
-                    
+
                 }
                 var articleUpdateDto = Mapper.Map<ArticleUpdateDto>(articleUpdateViewModel);
                 var result = await _articleService.UpdateAsync(articleUpdateDto, LoggedInUser.UserName);
@@ -182,12 +182,49 @@ namespace ProgrammersBlog.MVC.Areas.Admin.Controllers
         public async Task<JsonResult> GetAllArticles()
         {
             var articles = await _articleService.GetAllByNonDeletedAndActiveAsync();
-            var articleResult = JsonSerializer.Serialize(articles,new JsonSerializerOptions
+            var articleResult = JsonSerializer.Serialize(articles, new JsonSerializerOptions
             {
                 ReferenceHandler = ReferenceHandler.Preserve
             });
 
             return Json(articleResult);
         }
+
+        [Authorize(Roles = "SuperAdmin,Article.Read")]
+        [HttpGet]
+        public async Task<IActionResult> DeletedArticles()
+        {
+            var result = await _articleService.GetAllByDeletedAsync();
+            return View(result.Data);
+
+        }
+        [Authorize(Roles = "SuperAdmin,Article.Read")]
+        [HttpGet]
+        public async Task<JsonResult> GetAllDeletedArticles()
+        {
+            var result = await _articleService.GetAllByDeletedAsync();
+            var articles = JsonSerializer.Serialize(result, new JsonSerializerOptions
+            {
+                ReferenceHandler = ReferenceHandler.Preserve
+            });
+            return Json(articles);
+        }
+        [Authorize(Roles = "SuperAdmin,Article.Update")]
+        [HttpPost]
+        public async Task<JsonResult> UndoDelete(int articleId)
+        {
+            var result = await _articleService.UndoDeleteAsync(articleId, LoggedInUser.UserName);
+            var undoDeleteArticleResult = JsonSerializer.Serialize(result);
+            return Json(undoDeleteArticleResult);
+        }
+        [Authorize(Roles = "SuperAdmin,Article.Delete")]
+        [HttpPost]
+        public async Task<JsonResult> HardDelete(int articleId)
+        {
+            var result = await _articleService.HardDeleteAsync(articleId);
+            var hardDeletedArticleResult = JsonSerializer.Serialize(result);
+            return Json(hardDeletedArticleResult);
+        }
     }
+
 }

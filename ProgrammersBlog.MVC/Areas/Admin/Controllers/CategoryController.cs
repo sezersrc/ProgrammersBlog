@@ -133,5 +133,48 @@ namespace ProgrammersBlog.MVC.Areas.Admin.Controllers
             var deletedCatregory = JsonSerializer.Serialize(result.Data);
             return Json(deletedCatregory);
         }
+
+        [Authorize(Roles = "SuperAdmin,Category.Read")]
+        [HttpGet]
+        public async Task<IActionResult> DeletedCategories()
+        {
+            var result = await _categoryService.GetAllByDeletedAsync();
+            return View(result.Data);
+
+        }
+
+        [Authorize(Roles = "SuperAdmin,Category.Read")]
+        [HttpGet]
+        public async Task<JsonResult> GetAllDeletedCategories()
+        {
+            var result = await _categoryService.GetAllByDeletedAsync();
+            var categories = JsonSerializer.Serialize(result.Data, new JsonSerializerOptions
+            {
+                ReferenceHandler = ReferenceHandler.Preserve
+            });
+
+            return Json(categories);
+        }
+
+        [Authorize(Roles = "SuperAdmin,Category.Update")]
+        [HttpPost]
+
+        public async Task<JsonResult> UndoDelete(int categoryId)
+        {
+            var result = await _categoryService.UndoDeleteAsync(categoryId, LoggedInUser.UserName);
+            var undoDeletedCatregory = JsonSerializer.Serialize(result.Data);
+            return Json(undoDeletedCatregory);
+        }
+
+        [Authorize(Roles = "SuperAdmin,Category.Delete")]
+        [HttpPost]
+
+        public async Task<JsonResult> HardDelete(int categoryId)
+        {
+            var result = await _categoryService.HardDeleteAsync(categoryId);
+            var deletedCatregory = JsonSerializer.Serialize(result);
+            return Json(deletedCatregory);
+        }
+
     }
 }
