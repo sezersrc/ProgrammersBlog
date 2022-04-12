@@ -25,7 +25,11 @@ namespace ProgrammersBlog.MVC
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews().AddRazorRuntimeCompilation().AddJsonOptions(opt =>
+            services.AddControllersWithViews(options =>
+            {
+                // The value can not be Null mesajý türkçeleþtirme.
+                options.ModelBindingMessageProvider.SetValueMustNotBeNullAccessor(value=>"Bu alan boþ geçilmemelidir");
+            }).AddRazorRuntimeCompilation().AddJsonOptions(opt =>
             {
                 opt.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()); // Enum deðerleri döndürür (JsonNamingPolicy:CamelCase olursa string girebilirsin)
                 opt.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;// iç içe olan (nested ) json'A çevirir.
