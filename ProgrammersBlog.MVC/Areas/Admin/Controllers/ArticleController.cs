@@ -76,7 +76,7 @@ namespace ProgrammersBlog.MVC.Areas.Admin.Controllers
                 articleAddDto.Thumbnail = imageResult.Data.FullName;
                 
                 var result = await _articleService.AddAsync(articleAddDto, LoggedInUser.UserName,LoggedInUser.Id);
-                if (result.ResultStatus == ResultStatus.Success)
+                if (result.ResultStatus==ResultStatus.Success)
                 {
                     _toastNotification.AddSuccessToastMessage(result.Message,new ToastrOptions
                     {

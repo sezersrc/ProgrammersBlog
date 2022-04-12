@@ -9,6 +9,7 @@ using ProgrammersBlog.Shared.Utilities.Results.ComplexTypes;
 using ProgrammersBlog.Shared.Utilities.Results.Concrete;
 using System;
 using System.IO;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace ProgrammersBlog.MVC.Helpers.Concrete
@@ -70,10 +71,14 @@ namespace ProgrammersBlog.MVC.Helpers.Concrete
             /* Resimin uzantısı fileExtension adlı değişkene atanır. */
             string fileExtension = Path.GetExtension(pictureFile.FileName);
 
+            /*Karakter Kontrolü. Regex*/
+            Regex regex = new Regex("[*'\",._&#^@]");
+            name = regex.Replace(name, string.Empty);
+
             DateTime dateTime = DateTime.Now;
             /*
            // Parametre ile gelen değerler kullanılarak yeni bir resim adı oluşturulur.
-           // Örn: AlperTunga_587_5_38_12_3_10_2020.png
+           // Örn: SezerSurucu_587_5_38_12_3_10_2020.png
            */
             string newFileName = $"{name}_{dateTime.FullDateAndTimeStringWithUnderscore()}{fileExtension}";
 
