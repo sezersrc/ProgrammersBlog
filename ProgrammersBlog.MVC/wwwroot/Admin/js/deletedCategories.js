@@ -126,7 +126,7 @@
                         success: function (data) {
                             const undoDeletedCategoryResult = jQuery.parseJSON(data);
                             console.log(undoDeletedCategoryResult);
-                            if (undoDeletedCategoryResult.Data.ResultStatus===0) {
+                            if (undoDeletedCategoryResult.ResultStatus===0) {
                                 Swal.fire(
                                     'Arşivden Geri Getirildi!',
                                     `${undoDeletedCategoryResult.Data.Message}`,
@@ -138,7 +138,7 @@
                                 Swal.fire({
                                     icon: 'error',
                                     title: 'Başarısız İşlem!',
-                                    text: `${undoDeletedCategoryResult.Data.Message}`,
+                                    text: `${undoDeletedCategoryResult.Message}`,
                                 });
                             }
                         },

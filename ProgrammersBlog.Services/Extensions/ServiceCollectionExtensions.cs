@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using ProgrammersBlog.Data.Abstract;
 using ProgrammersBlog.Data.Concrete;
@@ -30,6 +32,12 @@ namespace ProgrammersBlog.Services.Extensions
 
 
             }).AddEntityFrameworkStores<ProgrammersBlogContext>();  // Identity 
+            serviceCollection.Configure<SecurityStampValidatorOptions>(options =>
+            {
+                //  SecStamp ayarının değeri değiştirecek Configurasyon. Veritabanına Soru yapar
+                // Default değer 30 dk.
+                options.ValidationInterval=TimeSpan.FromMinutes(15);
+            });
             serviceCollection.AddScoped<IUnitOfWork, UnitOfWork>();
             serviceCollection.AddScoped<ICategoryService, CategoryManager>();
             serviceCollection.AddScoped<IArticleService, ArticleManager>();

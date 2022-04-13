@@ -98,6 +98,8 @@ namespace ProgrammersBlog.MVC.Areas.Admin.Controllers
                     }
                 }
 
+                await UserManager.UpdateSecurityStampAsync(user);// Kullanıcı SecStamp değeri sıfırlanıcak . 30 dk bir kontrol edilir varsayılan olarak. 
+                //ServiceCollectionExtensions'A Configure ekleyerek bu varsayılan değer değiştirilebilir.
                 var userRoleAssignAjaxViewModel = JsonSerializer.Serialize(new UserRoleAssignAjaxViewModel
                 {
                     UserDto = new UserDto
