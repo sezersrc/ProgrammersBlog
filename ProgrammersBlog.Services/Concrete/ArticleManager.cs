@@ -8,6 +8,7 @@ using ProgrammersBlog.Shared.Utilities.Results.Abstract;
 using ProgrammersBlog.Shared.Utilities.Results.ComplexTypes;
 using ProgrammersBlog.Shared.Utilities.Results.Concrete;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace ProgrammersBlog.Services.Concrete
@@ -109,7 +110,20 @@ namespace ProgrammersBlog.Services.Concrete
             return new DataResult<ArticleListDto>(ResultStatus.Error, Messages.Article.NotFound(isPlural: false), null);
         }
 
-        public async Task<IDataResult<ArticleListDto>> GetByCategoryAsync(int categoryId)
+        public async Task<IDataResult<ArticleListDto>> GetAllByViewCountAsync(bool isAscending, int? takeSize)
+        {
+            var articles =
+                await UnitOfWork.Articles.GetAllAsync(a => a.IsActive && !a.IsDeleted, a => a.Category, a => a.User);
+            var sortedArticles = isAscending
+                ? articles.OrderBy(a => a.ViewsCount)
+                : articles.OrderByDescending(a => a.ViewsCount);
+            return new DataResult<ArticleListDto>(ResultStatus.Success, new ArticleListDto
+            {
+                Articles = takeSize==null ? sortedArticles.ToList() : sortedArticles.Take(takeSize.Value).ToList()
+            });
+        }
+
+        public async Task<IDataResult<ArticleListDto>> GetAllByCategoryAsync(int categoryId)
         {
             var result = await UnitOfWork.Categories.AnyAsync(c => c.Id == categoryId);
             if (result)

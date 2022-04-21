@@ -13,7 +13,8 @@ namespace ProgrammersBlog.Services.Abstract
 
         Task<IDataResult<ArticleListDto>> GetAllByNonDeletedAndActiveAsync();
         Task<IDataResult<ArticleListDto>> GetAllByDeletedAsync();
-        Task<IDataResult<ArticleListDto>> GetByCategoryAsync(int categoryId);
+        Task<IDataResult<ArticleListDto>> GetAllByViewCountAsync(bool isAscending, int? takeSize); // isAscending sıralama parametresi , takeSize kaç makale alınacağı . ? nulable yapıyor.
+        Task<IDataResult<ArticleListDto>> GetAllByCategoryAsync(int categoryId);
 
         Task<IResult>
             AddAsync(ArticleAddDto articleAddDto, string createdByName, int userId);
